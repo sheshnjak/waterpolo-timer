@@ -25,12 +25,12 @@
         <div class="scoreboard">
             <div class="team team-white">
                 <h2 class="team-name team-white">{{ settings().homeTeamName }}</h2>
-                <span class="score team-white" (click)="incrementWhiteScore()">{{ whiteScore() }}</span>
+                <span class="score team-white" (click)="incrementScore('white')">{{ whiteScore() }}</span>
             </div>
             <div class="separator">:</div>
             <div class="team team-blue">
                 <h2 class="team-name team-blue">{{ settings().awayTeamName }}</h2>
-                <span class="score team-blue" (click)="incrementBlueScore()">{{ blueScore() }}</span>
+                <span class="score team-blue" (click)="incrementScore('blue')">{{ blueScore() }}</span>
             </div>
         </div>
 
@@ -65,13 +65,13 @@
                     <button class="control-button" (click)="resetQuarter()">{{ translations.resetQuarter() }}</button>
                 </div>
                 <div class="team-controls">
-                    <button class="control-button button-white" (click)="decrementWhiteScore()">-</button>
-                    <button class="control-button button-white" (click)="incrementWhiteScore()">+ GOL</button>
+                    <button class="control-button button-white" (click)="decrementScore('white')">-</button>
+                    <button class="control-button button-white" (click)="incrementScore('white')">+ GOL</button>
                     <button class="control-button button-white" (click)="addExclusion('white')">{{ translations.addExclusion() }}</button>
                 </div>
                 <div class="team-controls">
-                    <button class="control-button button-blue" (click)="decrementBlueScore()">-</button>
-                    <button class="control-button button-blue" (click)="incrementBlueScore()">+ GOL</button>
+                    <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
+                    <button class="control-button button-blue" (click)="incrementScore('blue')">+ GOL</button>
                     <button class="control-button button-blue" (click)="addExclusion('blue')">{{ translations.addExclusion() }}</button>
                 </div>
                 <button class="control-button button-orange reset-attack-group" style="flex-basis: 35%;" (click)="resetAttackTime(settings().continuedAttackDuration)">{{ translations.continueAttack() }}</button>
