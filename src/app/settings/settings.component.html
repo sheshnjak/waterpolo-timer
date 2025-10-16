@@ -1,0 +1,36 @@
+<div class="settings-overlay">
+  <div class="settings-dialog">
+    <h2>{{ languageService.getTranslation('settings')() }}</h2>
+    <div class="form-group">
+      <label>{{ translations.quarterDuration() }}</label>
+      <input type="number" [(ngModel)]="editedSettings().quarterDuration">
+    </div>
+    <div class="form-group">
+      <label>{{ translations.attackDuration() }}</label>
+      <input type="number" [(ngModel)]="editedSettings().attackDuration">
+    </div>
+    <div class="form-group">
+      <label>{{ translations.continuedAttackDuration() }}</label>
+      <input type="number" [(ngModel)]="editedSettings().continuedAttackDuration">
+    </div>
+    <div class="form-group">
+      <label>{{ translations.homeTeamName() }}</label>
+      <input type="text" [(ngModel)]="editedSettings().homeTeamName">
+    </div>
+    <div class="form-group">
+      <label>{{ translations.awayTeamName() }}</label>
+      <input type="text" [(ngModel)]="editedSettings().awayTeamName">
+    </div>
+    <div class="form-group">
+      <label>{{ translations.language() }}</label>
+      <div class="language-selector">
+        <button (click)="setLanguage('en')" [class.active]="languageService.getCurrentLanguage() === 'en'">English</button>
+        <button (click)="setLanguage('hr')" [class.active]="languageService.getCurrentLanguage() === 'hr'">Hrvatski</button>
+      </div>
+    </div>
+    <div class="buttons">
+      <button (click)="onSave()">{{ translations.save() }}</button>
+      <button (click)="onClose()">{{ translations.cancel() }}</button>
+    </div>
+  </div>
+</div>
