@@ -6,7 +6,7 @@ A simple and intuitive water polo timer application built with the latest featur
 
 ## Features
 
-*   **Game Timer:** A customizable timer for each quarter, with a clickable quarter counter.
+*   **Game Timer:** A customizable and editable timer for each quarter, with a clickable quarter counter.
 *   **Attack Timer:** A customizable 30-second attack timer with tenths-of-a-second precision.
 *   **Scoreboard:** A clear and easy-to-read scoreboard for two teams.
 *   **Click-to-Score:** Increment a team's score by simply clicking on the score display.
@@ -16,8 +16,8 @@ A simple and intuitive water polo timer application built with the latest featur
 *   **Persistence:** All settings, including language preference, are saved to `localStorage`.
 *   **Responsive Design:** The application is optimized for a great experience on both desktop and mobile devices.
 *   **Audio Cues:** Sound alerts for the end of the quarter and the end of the attack clock.
-*   **Bilingual Interface:** The interface is available in both English and Croatian, with Croatian as the default.
-*   **Game Logging**: The application logs key game events and provides the option to download the log as a CSV file.
+*   **Bilingual Interface:** The interface is available in both English and Croatian, with a language selector in the settings.
+*   **Game Logging**: The application logs key game events and provides the option to download the log as a CSV file after the game.
 *   **Recent Logs**: The last five game logs are stored in `localStorage` and can be downloaded from the settings menu.
 
 ## Design and Style
@@ -27,7 +27,7 @@ A simple and intuitive water polo timer application built with the latest featur
 *   **Color-Coding:** Team-specific colors are used for scores, exclusion timers, and controls to improve readability and quick recognition.
 *   **Visual Effects:** A glowing effect on the active `Start/Stop` button provides clear visual feedback.
 *   **Responsiveness:** The application is designed to be responsive and work on various screen sizes.
-*   **Iconography:** Icons are used for settings and undo functionality, and flags are used in the language selector.
+*   **Iconography:** Icons are used for settings, undo functionality, and language selection (flags).
 
 ## Project Phases
 
@@ -62,7 +62,7 @@ A simple and intuitive water polo timer application built with the latest featur
 
 *   [x] Create a translation service to handle English and Croatian languages.
 *   [x] Set Croatian as the default language.
-*   [x] Add a language selector with flags to the settings dialog.
+*   [x] Add a language selector to the settings dialog.
 *   [x] Integrate translations throughout the application.
 *   [x] Persist the selected language in `localStorage`.
 
@@ -94,11 +94,39 @@ A simple and intuitive water polo timer application built with the latest featur
 *   [x] Removed the attack timer's title and the top header to maximize vertical space.
 *   [x] Relocated the settings and undo buttons to the top-right corner of the main content area for a cleaner layout.
 
-### Phase 10: Game Logging and Download (Completed)
+### Phase 10: Game Logging and Game Over Dialog (Completed)
 
 *   [x] Created a new service to manage game logs.
 *   [x] Implemented event logging for key game events (game start, score changes, exclusions, quarter ends).
-*   [x] Stored the last five game logs in `localStorage`.
+*   [x] Stored the game log in `localStorage`.
 *   [x] Added a dialog to offer a log download at the end of the game.
-*   [x] Added a section in the settings to view and download recent logs.
-*   [x] Changed the language selector to use flags for a more intuitive experience.
+
+### Phase 11: Final Bug Fixes and Polish (Completed)
+
+*   [x] Corrected the main timer's click-to-edit functionality.
+*   [x] Restored the glowing effect for the active `Start/Stop` button.
+*   [x] Fixed the team color for the "white" team's control buttons to be consistent with the scoreboard.
+
+### Phase 12: Recent Logs in Settings (Completed)
+
+*   [x] Added a "Recent Logs" section to the settings dialog.
+*   [x] Displayed a list of the last five game logs with download buttons.
+*   [x] Updated the `LogService` to correctly manage and store recent logs.
+*   [x] Integrated the feature with the translation service.
+
+### Phase 13: Language Selector with Flags (Completed)
+
+*   [x] Replaced the language selector buttons with clickable flag icons.
+*   [x] Styled the flag icons to provide visual feedback for the selected language.
+
+### Phase 14: Color and Layout Refinements (Completed)
+
+*   [x] Updated the color scheme to meet the new requirements.
+*   [x] Adjusted the layout of the exclusion timers to prevent resizing issues.
+*   [x] Repositioned the undo button to ensure a consistent layout.
+
+### Phase 15: Final UI Adjustments (Completed)
+
+*   [x] Aligned the quarter and attack timers vertically.
+*   [x] Set a fixed height for the exclusions element to prevent resizing issues.
+*   [x] Corrected the colors for the start/stop and attack timer buttons.

@@ -24,6 +24,7 @@
     right: 20px;
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .control-button {
@@ -37,12 +38,13 @@
     font-size: 1rem;
 }
 
-.settings-button {
+.settings-button, .undo-button {
     font-size: 1.5rem;
 }
 
-.undo-button {
-    font-size: 1.5rem;
+.undo-placeholder {
+    width: 48px; /* Same width as the undo button */
+    height: 48px; /* Same height as the undo button */
 }
 
 main {
@@ -55,10 +57,10 @@ main {
 
 .timers {
     display: flex;
-    gap: 40px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .timer {
@@ -66,22 +68,26 @@ main {
 }
 
 .quarter-inline-display {
-    font-size: 6rem;
+    font-size: 2rem;
     font-weight: bold;
     display: block;
     cursor: pointer;
+    margin-bottom: 10px;
+    color: gray;
 }
 
 .time {
     font-size: 6rem;
     font-weight: bold;
     letter-spacing: 2px;
+    cursor: pointer;
+    color: gray;
 }
 
 .time-input {
-    font-size: 4rem;
+    font-size: 6rem;
     font-weight: bold;
-    width: 150px;
+    width: 240px;
     text-align: center;
     background: #333;
     color: #fff;
@@ -111,6 +117,14 @@ main {
     margin-bottom: 10px;
 }
 
+.team-name.team-white {
+    color: #fff;
+}
+
+.team-name.team-blue {
+    color: #2196F3;
+}
+
 .score {
     font-size: 7rem;
     font-weight: bold;
@@ -128,32 +142,42 @@ main {
 .separator {
     font-size: 5rem;
     font-weight: bold;
+    color: gray;
+}
+
+.exclusions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 60px;
 }
 
 .exclusions-wrapper h3 {
     text-align: center;
-    margin-bottom: 15px;
+    margin: 0;
     font-size: 1.2rem;
     font-weight: normal;
-}
-
-.exclusions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
+    color: gray;
 }
 
 .team-exclusions {
-    flex-grow: 1;
-    max-width: 45%;
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.team-exclusions.team-white {
+    justify-content: flex-start;
+}
+
+.team-exclusions.team-blue {
+    justify-content: flex-end;
 }
 
 .exclusion-timers {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;
 }
 
 .exclusion-timer {
@@ -209,22 +233,35 @@ footer {
     flex-grow: 2;
 }
 
-.button-white {
-    background-color: #e0e0e0;
+.controls-main .control-button.button-white {
+    background-color: #fff;
     color: #000;
 }
 
-.button-blue {
+.controls-main .control-button.button-blue {
     background-color: #2196F3;
     color: #fff;
 }
 
-.start-stop {
+.controls-main .control-button.start-stop {
     font-size: 1.5rem !important;
     font-weight: bold;
+    background-color: #4CAF50;
+    color: #fff;
 }
 
-.start-stop.running {
+.controls-main .control-button.start-stop.running {
     background-color: #f44336;
-    box-shadow: 0 0 20px #f44336;
+    color: #fff;
+    box-shadow: 0 0 15px #f44336, 0 0 25px #f44336, 0 0 35px #f44336;
+}
+
+.controls-main .control-button.button-yellow {
+    background-color: yellow;
+    color: #000;
+}
+
+.controls-main .control-button.button-orange {
+    background-color: orange;
+    color: #000;
 }

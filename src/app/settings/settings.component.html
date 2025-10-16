@@ -24,10 +24,27 @@
     <div class="form-group">
       <label>{{ translations.language() }}</label>
       <div class="language-selector">
-        <button (click)="setLanguage('en')" [class.active]="languageService.getCurrentLanguage() === 'en'">English</button>
-        <button (click)="setLanguage('hr')" [class.active]="languageService.getCurrentLanguage() === 'hr'">Hrvatski</button>
+        <img src="https://flagcdn.com/w40/gb.png" (click)="setLanguage('en')" [class.active]="languageService.getCurrentLanguage() === 'en'" alt="English">
+        <img src="https://flagcdn.com/w40/hr.png" (click)="setLanguage('hr')" [class.active]="languageService.getCurrentLanguage() === 'hr'" alt="Hrvatski">
       </div>
     </div>
+    
+    <div class="recent-logs">
+      <h3>{{ translations.recentLogs() }}</h3>
+      @if (pastLogs().length > 0) {
+        <ul>
+          @for (log of pastLogs(); track log.id) {
+            <li>
+              <span>{{ log.id | date:'medium' }}</span>
+              <button (click)="downloadLog(log)">Download</button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p>No recent logs available.</p>
+      }
+    </div>
+
     <div class="buttons">
       <button (click)="onSave()">{{ translations.save() }}</button>
       <button (click)="onClose()">{{ translations.cancel() }}</button>

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, output, input, signal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output, input, signal, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Settings } from '../settings';
 import { LanguageService } from '../language.service';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-settings',
@@ -11,14 +12,16 @@ import { LanguageService } from '../language.service';
   styleUrls: ['./settings.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   languageService = inject(LanguageService);
-  
+  logService = inject(LogService);
+
   settings = input.required<Settings>();
   settingsChanged = output<Settings>();
   close = output<void>();
 
-  editedSettings = signal<Settings>({ ...this.settings() });
+  editedSettings = signal<Settings>({} as Settings);
+  pastLogs = this.logService.pastLogs;
 
   translations = {
     quarterDuration: this.languageService.getTranslation('quarterDuration'),
@@ -29,7 +32,12 @@ export class SettingsComponent {
     save: this.languageService.getTranslation('save'),
     language: this.languageService.getTranslation('language'),
     cancel: this.languageService.getTranslation('cancel'),
+    recentLogs: this.languageService.getTranslation('recentLogs'),
   };
+
+  ngOnInit() {
+    this.editedSettings.set({ ...this.settings() });
+  }
 
   onSave() {
     this.settingsChanged.emit(this.editedSettings());
@@ -41,5 +49,9 @@ export class SettingsComponent {
 
   setLanguage(lang: string) {
     this.languageService.setLanguage(lang);
+  }
+
+  downloadLog(log: { id: string; entries: any[] }) {
+    this.logService.downloadCsv(`log-${log.id}.csv`, log.entries);
   }
 }

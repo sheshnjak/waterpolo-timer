@@ -30,6 +30,7 @@ export class LanguageService {
       cancel: 'CANCEL',
       gameOver: 'Game Over',
       downloadLog: 'Download Log',
+      recentLogs: 'Recent Logs',
     },
     hr: {
       quarter: 'ČETVRTINA',
@@ -54,6 +55,7 @@ export class LanguageService {
       cancel: 'ODUSTANI',
       gameOver: 'Kraj utakmice',
       downloadLog: 'Preuzmi zapisnik',
+      recentLogs: 'Nedavni zapisnici',
     }
   };
 
