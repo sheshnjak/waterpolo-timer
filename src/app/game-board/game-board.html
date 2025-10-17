@@ -25,12 +25,12 @@
         <div class="scoreboard">
             <div class="team team-white">
                 <h2 class="team-name">{{ settings().homeTeamName }}</h2>
-                <span class="score">{{ whiteScore() }}</span>
+                <span class="score" (click)="incrementScore('white')">{{ whiteScore() }}</span>
             </div>
             <div class="separator">:</div>
             <div class="team team-blue">
                 <h2 class="team-name">{{ settings().awayTeamName }}</h2>
-                <span class="score">{{ blueScore() }}</span>
+                <span class="score" (click)="incrementScore('blue')">{{ blueScore() }}</span>
             </div>
         </div>
 
@@ -65,15 +65,14 @@
                     <button class="control-button button-white" (click)="incrementScore('white')">+ GOL</button>
                 </div>
                 <div class="team-controls">
-                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ translations.addExclusion() }}</button>
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                     <button class="control-button button-blue" (click)="incrementScore('blue')">+ GOL</button>
-                </div>
-                <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634;{{ settings().continuedAttackDuration }}</button>
+                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ translations.addExclusion() }}</button>                </div>
+                <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
             </div>
             <div class="button-row">
                 <button class="control-button start-stop" [class.running]="running()" style="flex-basis: 75%;" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
-                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="translations.newAttack()">&#8634;{{ settings().attackDuration }}</button>
+                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="translations.newAttack()">&#8634; {{ settings().attackDuration }} s</button>
             </div>
         </div>
     </footer>

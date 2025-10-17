@@ -29,8 +29,8 @@
       </div>
     </div>
     <div class="buttons">
-        <button (click)="resetQuarter.emit()">{{ translations.resetQuarter() }}</button>
-        <button (click)="downloadCurrentLog()">{{ translations.downloadCurrentLog() }}</button>
+        <button class="button-reset" (click)="resetQuarter.emit()">{{ translations.resetQuarter() }}</button>
+        <button class="button-download" (click)="downloadCurrentLog()" [title]="translations.saveCurrentLogTitle()">{{ translations.downloadCurrentLog() }}</button>
     </div>
     <div class="recent-logs">
       <h3>{{ translations.recentLogs() }}</h3>
@@ -49,8 +49,8 @@
     </div>
 
     <div class="buttons">
-      <button (click)="onSave()">{{ translations.save() }}</button>
-      <button (click)="onClose()">{{ translations.cancel() }}</button>
+      <button class="button-save" (click)="onSave()">{{ translations.save() }}</button>
+      <button class="button-cancel" (click)="onClose()">{{ translations.cancel() }}</button>
     </div>
   </div>
 </div>

@@ -19,6 +19,7 @@
   position: absolute;
   top: 0;
   width: calc(100% - 20px);
+  z-index: 1;
 }
 
 .undo-button, .settings-button, .undo-placeholder {
@@ -104,6 +105,7 @@ main {
 .score {
   font-size: 6rem;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .team-white .team-name, .team-white .score {
@@ -117,6 +119,7 @@ main {
 .separator {
   font-size: 6rem;
   font-weight: bold;
+  color: #aaa;
 }
 
 /* Exclusions */
@@ -126,6 +129,10 @@ main {
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.exclusions-wrapper h3 {
+    color: #aaa;
 }
 
 .team-exclusions {

@@ -15,7 +15,7 @@ export class LanguageService {
       resetAttack: 'RESET ATTACK',
       continueAttack: 'CONTINUE ATTACK',
       nextQuarter: 'NEXT QTR',
-      resetQuarter: 'RESET QTR',
+      resetQuarter: 'Reset Quarter',
       addExclusion: 'EXCLUSION',
       settings: 'SETTINGS',
       white: 'WHITE',
@@ -32,6 +32,10 @@ export class LanguageService {
       gameOver: 'Game Over',
       downloadLog: 'Download Log',
       recentLogs: 'Recent Logs',
+      downloadCurrentLog: 'Download Current Log',
+      saveCurrentLogTitle: 'Save current log',
+      finalScore: 'Final Score',
+      newGame: 'New Game',
     },
     hr: {
       quarter: 'ČETVRTINA',
@@ -41,7 +45,7 @@ export class LanguageService {
       resetAttack: 'RESET NAPADA',
       continueAttack: 'NASTAVAK NAPADA',
       nextQuarter: 'SLJEDEĆA ČETV',
-      resetQuarter: 'RESET ČETV',
+      resetQuarter: 'Reset četvrtine',
       addExclusion: 'ISKLJUČENJE',
       settings: 'POSTAVKE',
       white: 'BIJELI',
@@ -58,6 +62,10 @@ export class LanguageService {
       gameOver: 'Kraj utakmice',
       downloadLog: 'Preuzmi zapisnik',
       recentLogs: 'Nedavni zapisnici',
+      downloadCurrentLog: 'Preuzmi trenutni zapisnik',
+      saveCurrentLogTitle: 'Spremi trenutni zapisnik',
+      finalScore: 'Konačni rezultat',
+      newGame: 'Nova igra',
     }
   };
 

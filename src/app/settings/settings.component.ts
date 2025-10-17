@@ -36,6 +36,7 @@ export class SettingsComponent implements OnInit {
     recentLogs: this.languageService.getTranslation('recentLogs'),
     downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
+    saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
   };
 
   ngOnInit() {
