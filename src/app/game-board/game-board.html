@@ -1,20 +1,20 @@
 <div class="container" [class.running]="running()">
     <div class="top-controls">
         @if (showUndo()) {
-          <button class="control-button undo-button" (click)="undoLastAction()">&#8634;</button>
+        <button class="undo-button" (click)="undoLastAction()">&#8634;</button>
         } @else {
-          <div class="undo-placeholder"></div>
+        <div class="undo-placeholder"></div>
         }
-        <button class="control-button settings-button" (click)="toggleSettings()">&#9881;</button>
+        <button class="settings-button" (click)="toggleSettings()">&#9881;</button>
     </div>
     <main>
         <div class="timers">
             <div class="timer">
                 @if (isEditingQuarterTime()) {
-                  <input #quarterTimeInput type="text" [ngModel]="tempQuarterTime()" (ngModelChange)="tempQuarterTime.set($event)" (blur)="saveQuarterTime()" (keydown.enter)="saveQuarterTime()" class="time time-input" />
+                <input #quarterTimeInput type="text" [ngModel]="tempQuarterTime()" (ngModelChange)="tempQuarterTime.set($event)" (blur)="saveQuarterTime()" (keydown.enter)="saveQuarterTime()" class="time time-input" />
                 } @else {
-                  <span class="quarter-inline-display" (click)="nextQuarter()">{{ quarterDisplay() }}</span>
-                  <span class="time" (click)="editQuarterTime()">{{ formatTime(quarterTime()) }}</span>
+                <span class="quarter-inline-display" (click)="nextQuarter()">{{ quarterDisplay() }}</span>
+                <span class="time" (click)="editQuarterTime()">{{ formatTime(quarterTime()) }}</span>
                 }
             </div>
             <div class="timer">
@@ -24,35 +24,31 @@
 
         <div class="scoreboard">
             <div class="team team-white">
-                <h2 class="team-name team-white">{{ settings().homeTeamName }}</h2>
-                <span class="score team-white" (click)="incrementScore('white')">{{ whiteScore() }}</span>
+                <h2 class="team-name">{{ settings().homeTeamName }}</h2>
+                <span class="score">{{ whiteScore() }}</span>
             </div>
             <div class="separator">:</div>
             <div class="team team-blue">
-                <h2 class="team-name team-blue">{{ settings().awayTeamName }}</h2>
-                <span class="score team-blue" (click)="incrementScore('blue')">{{ blueScore() }}</span>
+                <h2 class="team-name">{{ settings().awayTeamName }}</h2>
+                <span class="score">{{ blueScore() }}</span>
             </div>
         </div>
 
         <div class="exclusions-wrapper">
             <div class="team-exclusions team-white">
-                <div class="exclusion-timers">
-                    @for (timer of whiteExclusions(); track timer.id) {
-                    <div class="exclusion-timer team-white" (click)="removeExclusion('white', timer.id)">
-                        {{ formatTime(timer.time) }}
-                    </div>
-                    }
+                @for (timer of whiteExclusions(); track timer.id) {
+                <div class="exclusion-timer team-white" (click)="removeExclusion('white', timer.id)">
+                    {{ formatTime(timer.time) }}
                 </div>
+                }
             </div>
             <h3>{{ translations.exclusions() }}</h3>
             <div class="team-exclusions team-blue">
-                <div class="exclusion-timers">
-                    @for (timer of blueExclusions(); track timer.id) {
-                    <div class="exclusion-timer team-blue" (click)="removeExclusion('blue', timer.id)">
-                        {{ formatTime(timer.time) }}
-                    </div>
-                    }
+                @for (timer of blueExclusions(); track timer.id) {
+                <div class="exclusion-timer team-blue" (click)="removeExclusion('blue', timer.id)">
+                    {{ formatTime(timer.time) }}
                 </div>
+                }
             </div>
         </div>
     </main>
@@ -62,28 +58,36 @@
             <div class="button-row">
                 <div class="quarter-controls" style="flex-basis: 15%;">
                     <button class="control-button" (click)="nextQuarter()">{{ translations.nextQuarter() }}</button>
-                    <button class="control-button" (click)="resetQuarter()">{{ translations.resetQuarter() }}</button>
                 </div>
                 <div class="team-controls">
+                    <button class="control-button button-white" (click)="addExclusion('white')">{{ translations.addExclusion() }}</button>
                     <button class="control-button button-white" (click)="decrementScore('white')">-</button>
                     <button class="control-button button-white" (click)="incrementScore('white')">+ GOL</button>
-                    <button class="control-button button-white" (click)="addExclusion('white')">{{ translations.addExclusion() }}</button>
                 </div>
                 <div class="team-controls">
+                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ translations.addExclusion() }}</button>
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                     <button class="control-button button-blue" (click)="incrementScore('blue')">+ GOL</button>
-                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ translations.addExclusion() }}</button>
                 </div>
-                <button class="control-button button-orange reset-attack-group" style="flex-basis: 35%;" (click)="resetAttackTime(settings().continuedAttackDuration)">{{ translations.continueAttack() }}</button>
+                <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634;{{ settings().continuedAttackDuration }}</button>
             </div>
             <div class="button-row">
                 <button class="control-button start-stop" [class.running]="running()" style="flex-basis: 75%;" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
-                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)">{{ translations.resetAttack() }}</button>
+                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="translations.newAttack()">&#8634;{{ settings().attackDuration }}</button>
             </div>
         </div>
     </footer>
 </div>
 
 @if (showSettings()) {
-<app-settings [settings]="settings()" (settingsChanged)="onSettingsChanged($event)" (close)="toggleSettings()"></app-settings>
+<app-settings [settings]="settings()" (settingsChanged)="onSettingsChanged($event)" (close)="toggleSettings()" (resetQuarter)="resetQuarter()"></app-settings>
+}
+
+@if (isGameOver()) {
+  <dialog open>
+    <h2>{{ translations.gameOver() }}</h2>
+    <p>{{ translations.finalScore() }}: {{ whiteScore() }} - {{ blueScore() }}</p>
+    <button (click)="downloadLog()">{{ translations.downloadLog() }}</button>
+    <button (click)="resetGame()">{{ translations.newGame() }}</button>
+  </dialog>
 }

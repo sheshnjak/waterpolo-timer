@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   settings = input.required<Settings>();
   settingsChanged = output<Settings>();
   close = output<void>();
+  resetQuarter = output<void>();
 
   editedSettings = signal<Settings>({} as Settings);
   pastLogs = this.logService.pastLogs;
@@ -33,6 +34,8 @@ export class SettingsComponent implements OnInit {
     language: this.languageService.getTranslation('language'),
     cancel: this.languageService.getTranslation('cancel'),
     recentLogs: this.languageService.getTranslation('recentLogs'),
+    downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
+    resetQuarter: this.languageService.getTranslation('resetQuarter'),
   };
 
   ngOnInit() {
@@ -53,5 +56,9 @@ export class SettingsComponent implements OnInit {
 
   downloadLog(log: { id: string; entries: any[] }) {
     this.logService.downloadCsv(`log-${log.id}.csv`, log.entries);
+  }
+
+  downloadCurrentLog() {
+    this.logService.downloadCsv('current_game_log.csv', this.logService.logEntries());
   }
 }

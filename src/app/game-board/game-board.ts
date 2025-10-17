@@ -14,6 +14,8 @@ interface GameState {
   attackTime: number;
   whiteExclusions: { id: number; time: number }[];
   blueExclusions: { id: number; time: number }[];
+  whiteScore: number;
+  blueScore: number;
 }
 
 @Component({
@@ -27,7 +29,6 @@ export class GameBoardComponent implements OnInit {
   languageService = inject(LanguageService);
   logService = inject(LogService);
   @ViewChild('quarterTimeInput') quarterTimeInput: ElementRef | undefined;
-  @ViewChild('gameOverDialog') gameOverDialog: ElementRef | undefined;
 
   // Game state signals
   quarter = signal<number | string>(1);
@@ -41,6 +42,7 @@ export class GameBoardComponent implements OnInit {
   showSettings = signal(false);
   showUndo = signal(false);
   isEditingQuarterTime = signal(false);
+  isGameOver = signal(false);
   tempQuarterTime = signal('');
 
   // Translations
@@ -48,7 +50,7 @@ export class GameBoardComponent implements OnInit {
     quarter: this.languageService.getTranslation('quarter'),
     attack: this.languageService.getTranslation('attack'),
     exclusions: this.languageService.getTranslation('exclusions'),
-    resetAttack: this.languageService.getTranslation('resetAttack'),
+    newAttack: this.languageService.getTranslation('newAttack'),
     continueAttack: this.languageService.getTranslation('continueAttack'),
     nextQuarter: this.languageService.getTranslation('nextQuarter'),
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
@@ -57,6 +59,8 @@ export class GameBoardComponent implements OnInit {
     undo: this.languageService.getTranslation('undo'),
     gameOver: this.languageService.getTranslation('gameOver'),
     downloadLog: this.languageService.getTranslation('downloadLog'),
+    newGame: this.languageService.getTranslation('newGame'),
+    finalScore: this.languageService.getTranslation('finalScore'),
   };
 
   quarterDisplay = computed(() => {
@@ -66,7 +70,7 @@ export class GameBoardComponent implements OnInit {
     }
     return q;
   });
-  
+
   // Settings signals
   settings = signal<Settings>({
     quarterDuration: 8,
@@ -107,7 +111,8 @@ export class GameBoardComponent implements OnInit {
       this.logService.addEntry('Timer started', '');
       this.intervalId = setInterval(() => {
         this.timerTickCount++;
-        if (this.quarterTime() <= 0) {
+
+        if (this.quarterTime() <= 0 || !this.running()) {
           this.stopTimers();
           return;
         }
@@ -130,6 +135,9 @@ export class GameBoardComponent implements OnInit {
             if (this.quarterTime() === 0) {
               this.quarterEndSound.play();
               this.stopTimers();
+              if (this.quarter() === 4) {
+                this.endGame();
+              }
             }
           }
 
@@ -163,6 +171,8 @@ export class GameBoardComponent implements OnInit {
       attackTime: this.attackTime(),
       whiteExclusions: this.whiteExclusions(),
       blueExclusions: this.blueExclusions(),
+      whiteScore: this.whiteScore(),
+      blueScore: this.blueScore(),
     };
     this.showUndo.set(true);
     clearTimeout(this.undoTimeout);
@@ -177,6 +187,8 @@ export class GameBoardComponent implements OnInit {
       this.attackTime.set(this.lastState.attackTime);
       this.whiteExclusions.set(this.lastState.whiteExclusions);
       this.blueExclusions.set(this.lastState.blueExclusions);
+      this.whiteScore.set(this.lastState.whiteScore);
+      this.blueScore.set(this.lastState.blueScore);
       this.showUndo.set(false);
       clearTimeout(this.undoTimeout);
       this.lastState = null;
@@ -194,8 +206,8 @@ export class GameBoardComponent implements OnInit {
     this.logService.addEntry(`End of Quarter ${this.quarter()}`, '');
     this.quarter.update(q => {
         if (q === 4) {
-            this.showGameOverDialog();
-            return 'END';
+          this.endGame();
+          return 'END';
         }
         if (typeof q === 'number') return q + 1;
         return 1;
@@ -203,12 +215,21 @@ export class GameBoardComponent implements OnInit {
     this.resetQuarter(false);
   }
 
-  showGameOverDialog() {
+  endGame() {
+    this.isGameOver.set(true);
     this.logService.saveCurrentLog();
-    if (this.gameOverDialog) {
-      this.gameOverDialog.nativeElement.showModal();
-    }
   }
+
+  resetGame() {
+    this.isGameOver.set(false);
+    this.quarter.set(1);
+    this.whiteScore.set(0);
+    this.blueScore.set(0);
+    this.logService.clearCurrentLog();
+    this.logService.addEntry('New game started', '');
+    this.resetQuarter(false);
+  }
+
 
   downloadLog() {
     this.logService.downloadCsv('game_log.csv', this.logService.logEntries());
@@ -286,6 +307,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   incrementScore(team: 'white' | 'blue') {
+    this.saveStateForUndo();
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
     if (team === 'white') {
       this.whiteScore.update(s => s + 1);
@@ -296,6 +318,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   decrementScore(team: 'white' | 'blue') {
+    this.saveStateForUndo();
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
     if (team === 'white' && this.whiteScore() > 0) {
       this.whiteScore.update(s => s - 1);

@@ -1,267 +1,278 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-:host {
-    display: block;
-    width: 100%;
-    height: 100%;
-    font-family: 'Roboto Mono', monospace;
-    color: #fff;
-}
-
+/* Game Board Container */
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background-color: #1a1a1a;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  user-select: none;
 }
 
+/* Top Controls (Undo, Settings) */
 .top-controls {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 20px);
 }
 
-.control-button {
-    background: none;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-family: inherit;
-    border-radius: 5px;
-    font-size: 1rem;
+.undo-button, .settings-button, .undo-placeholder {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
 }
 
-.settings-button, .undo-button {
-    font-size: 1.5rem;
+.undo-button:hover, .settings-button:hover {
+  opacity: 0.8;
 }
 
-.undo-placeholder {
-    width: 48px; /* Same width as the undo button */
-    height: 48px; /* Same height as the undo button */
-}
-
+/* Main Content Area */
 main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
+/* Timers (Quarter & Attack) */
 .timers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .timer {
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  font-size: 8rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.time-input {
+  font-size: 6rem;
+  width: 250px;
+  text-align: center;
 }
 
 .quarter-inline-display {
     font-size: 2rem;
-    font-weight: bold;
-    display: block;
-    cursor: pointer;
-    margin-bottom: 10px;
-    color: gray;
-}
-
-.time {
-    font-size: 6rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    cursor: pointer;
-    color: gray;
-}
-
-.time-input {
-    font-size: 6rem;
-    font-weight: bold;
-    width: 240px;
-    text-align: center;
-    background: #333;
-    color: #fff;
-    border: none;
+    font-weight: normal;
+    margin-bottom: -20px;
 }
 
 .attack-time.low {
-    color: #ff4141;
+  color: #f00;
 }
 
+/* Scoreboard */
 .scoreboard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .team {
-    text-align: center;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.team-name {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-}
-
-.team-name.team-white {
-    color: #fff;
-}
-
-.team-name.team-blue {
-    color: #2196F3;
+.team-name,
+.score {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
 .score {
-    font-size: 7rem;
-    font-weight: bold;
-    cursor: pointer;
+  font-size: 6rem;
+  font-weight: bold;
 }
 
-.score.team-white {
+.team-white .team-name, .team-white .score {
     color: #fff;
 }
 
-.score.team-blue {
+.team-blue .team-name, .team-blue .score {
     color: #2196F3;
 }
 
 .separator {
-    font-size: 5rem;
-    font-weight: bold;
-    color: gray;
+  font-size: 6rem;
+  font-weight: bold;
 }
 
+/* Exclusions */
 .exclusions-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    min-height: 60px;
-}
-
-.exclusions-wrapper h3 {
-    text-align: center;
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: normal;
-    color: gray;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .team-exclusions {
-    display: flex;
-    gap: 10px;
-    flex: 1;
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  min-height: 40px; 
 }
 
 .team-exclusions.team-white {
-    justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .team-exclusions.team-blue {
-    justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .exclusion-timers {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .exclusion-timer {
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1.2rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  background-color: #333;
 }
 
 .exclusion-timer.team-white {
-    background-color: #fff;
-    color: #000;
+  background-color: #f0f0f0;
+  color: #000;
 }
 
 .exclusion-timer.team-blue {
-    background-color: #2196F3;
-    color: #fff;
+  background-color: #2196F3;
+  color: #fff;
 }
 
+
+/* Footer & Main Controls */
 footer {
-    margin-top: auto;
-    width: 100%;
+  padding: 10px;
 }
 
-.controls-main .button-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+.controls-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.controls-main .control-button {
-    flex-grow: 1;
-    padding: 15px 10px;
-    font-size: 0.9rem;
-    border-radius: 8px;
-    border: 1px solid #555;
-    background-color: #333;
-    color: #fff;
-    transition: all 0.2s ease;
+.button-row {
+  display: flex;
+  gap: 10px;
+}
+
+.control-button {
+  flex-grow: 1;
+  padding: 15px 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50px;
+}
+
+.control-button:hover {
+  opacity: 0.9;
 }
 
 .team-controls {
+  display: flex;
+  flex-basis: 40%;
+  gap: 10px;
+}
+
+.quarter-controls {
     display: flex;
-    gap: 5px;
-    flex-basis: 25%;
+    gap: 10px;
 }
 
-.team-controls .control-button {
-    border: none;
+.start-stop {
+  background-color: #4CAF50;
 }
 
-.team-controls .control-button:nth-child(2) {
-    flex-grow: 2;
+.start-stop.running {
+  background-color: #f44336;
 }
 
-.controls-main .control-button.button-white {
-    background-color: #fff;
-    color: #000;
+.button-white {
+  background-color: #f0f0f0;
+  color: #000;
 }
 
-.controls-main .control-button.button-blue {
-    background-color: #2196F3;
-    color: #fff;
+.button-blue {
+  background-color: #2196F3;
 }
 
-.controls-main .control-button.start-stop {
-    font-size: 1.5rem !important;
-    font-weight: bold;
+.button-yellow {
+  background-color: #ffeb3b;
+  color: #000;
+}
+
+.button-orange {
+    background-color: #ff9800;
+}
+
+/* Game Over Dialog */
+dialog {
+  background-color: #222;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+dialog h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+dialog p {
+    margin-bottom: 20px;
+}
+
+dialog button {
     background-color: #4CAF50;
-    color: #fff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.controls-main .control-button.start-stop.running {
-    background-color: #f44336;
-    color: #fff;
-    box-shadow: 0 0 15px #f44336, 0 0 25px #f44336, 0 0 35px #f44336;
-}
-
-.controls-main .control-button.button-yellow {
-    background-color: yellow;
-    color: #000;
-}
-
-.controls-main .control-button.button-orange {
-    background-color: orange;
-    color: #000;
+dialog button:hover {
+    opacity: 0.8;
 }
