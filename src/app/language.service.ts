@@ -44,7 +44,7 @@ export class LanguageService {
       newAttack: 'NOVI NAPAD',
       resetAttack: 'RESET NAPADA',
       continueAttack: 'NASTAVAK NAPADA',
-      nextQuarter: 'SLJEDEĆA ČETV',
+      nextQuarter: 'SLJEDEĆA ČETVRTINA',
       resetQuarter: 'Reset četvrtine',
       addExclusion: 'ISKLJUČENJE',
       settings: 'POSTAVKE',
