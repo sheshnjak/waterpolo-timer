@@ -53,6 +53,7 @@ main {
   justify-content: space-around;
   width: 100%;
   margin-bottom: 20px;
+  align-items: flex-end;
 }
 
 .timer {
@@ -203,6 +204,7 @@ footer {
   align-items: center;
   text-align: center;
   min-height: 50px;
+  font-weight: bold;
 }
 
 .control-button:hover {
@@ -278,6 +280,7 @@ dialog button {
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 dialog button:hover {
