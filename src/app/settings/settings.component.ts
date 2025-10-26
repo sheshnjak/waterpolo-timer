@@ -22,14 +22,16 @@ export class SettingsComponent implements OnInit {
   resetQuarter = output<void>();
 
   editedSettings = signal<Settings>({} as Settings);
+  homeTeamName = signal('');
+  awayTeamName = signal('');
   pastLogs = this.logService.pastLogs;
 
   translations = {
     quarterDuration: this.languageService.getTranslation('quarterDuration'),
     attackDuration: this.languageService.getTranslation('attackDuration'),
     continuedAttackDuration: this.languageService.getTranslation('continuedAttackDuration'),
-    homeTeamName: this.languageService.getTranslation('homeTeamName'),
-    awayTeamName: this.languageService.getTranslation('awayTeamName'),
+    homeTeamNameLabel: this.languageService.getTranslation('homeTeamName'),
+    awayTeamNameLabel: this.languageService.getTranslation('awayTeamName'),
     save: this.languageService.getTranslation('save'),
     language: this.languageService.getTranslation('language'),
     cancel: this.languageService.getTranslation('cancel'),
@@ -40,11 +42,19 @@ export class SettingsComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.editedSettings.set({ ...this.settings() });
+    const currentSettings = this.settings();
+    this.editedSettings.set({ ...currentSettings });
+    this.homeTeamName.set(currentSettings.homeTeamName);
+    this.awayTeamName.set(currentSettings.awayTeamName);
   }
 
   onSave() {
-    this.settingsChanged.emit(this.editedSettings());
+    const settings: Settings = {
+      ...this.editedSettings(),
+      homeTeamName: this.homeTeamName(),
+      awayTeamName: this.awayTeamName(),
+    };
+    this.settingsChanged.emit(settings);
   }
 
   onClose() {

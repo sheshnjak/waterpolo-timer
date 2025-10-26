@@ -42,7 +42,7 @@
                 </div>
                 }
             </div>
-            <h3>{{ languageService.getTranslation('exclusions') }}</h3>
+            <h3>{{ languageService.getTranslation('exclusions')() }}</h3>
             <div class="team-exclusions team-blue">
                 @for (timer of blueExclusions(); track timer.id) {
                 <div class="exclusion-timer team-blue" (click)="removeExclusion('blue', timer.id)">
@@ -57,22 +57,22 @@
         <div class="controls-main">
             <div class="button-row">
                 <div class="quarter-controls" style="flex-basis: 15%;">
-                    <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter') }}</button>
+                    <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter')() }}</button>
                 </div>
                 <div class="team-controls">
-                    <button class="control-button button-white" (click)="addExclusion('white')">{{ languageService.getTranslation('addExclusion') }}</button>
+                    <button class="control-button button-white" (click)="addExclusion('white')">{{ languageService.getTranslation('addExclusion')() }}</button>
                     <button class="control-button button-white" (click)="decrementScore('white')">-</button>
                     <button class="control-button button-white" (click)="incrementScore('white')">+ GOL</button>
                 </div>
                 <div class="team-controls">
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                     <button class="control-button button-blue" (click)="incrementScore('blue')">+ GOL</button>
-                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion') }}</button>                </div>
+                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>                </div>
                 <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
             </div>
             <div class="button-row">
                 <button class="control-button start-stop" [class.running]="running()" style="flex-basis: 75%;" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
-                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')">&#8634; {{ settings().attackDuration }} s</button>
+                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
             </div>
         </div>
     </footer>
@@ -84,9 +84,9 @@
 
 @if (isGameOver()) {
   <dialog open>
-    <h2>{{ languageService.getTranslation('gameOver') }}</h2>
-    <p>{{ languageService.getTranslation('finalScore') }}: {{ whiteScore() }} - {{ blueScore() }}</p>
-    <button (click)="downloadLog()">{{ languageService.getTranslation('downloadLog') }}</button>
-    <button (click)="resetGame()">{{ languageService.getTranslation('newGame') }}</button>
+    <h2>{{ languageService.getTranslation('gameOver')() }}</h2>
+    <p>{{ languageService.getTranslation('finalScore')() }}: {{ whiteScore() }} - {{ blueScore() }}</p>
+    <button (click)="downloadLog()">{{ languageService.getTranslation('downloadLog')() }}</button>
+    <button (click)="resetGame()">{{ languageService.getTranslation('newGame')() }}</button>
   </dialog>
 }

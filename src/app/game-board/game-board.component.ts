@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inject, OnInit, inject, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inject, OnInit, inject, ElementRef, ViewChild, WritableSignal } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from '../settings/settings.component';
@@ -54,10 +54,11 @@ export class GameBoardComponent implements OnInit {
   });
 
   // Settings signals
-  settings = signal<Settings>({
+  settings: WritableSignal<Settings> = signal<Settings>({
     quarterDuration: 8,
     attackDuration: 30,
     continuedAttackDuration: 20,
+    exclusionDuration: 20,
     homeTeamName: 'WHITE',
     awayTeamName: 'BLUE',
   });
@@ -76,7 +77,12 @@ export class GameBoardComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const savedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
       if (savedSettings) {
-        this.settings.set(JSON.parse(savedSettings));
+        try {
+          const parsedSettings = JSON.parse(savedSettings);
+          this.onSettingsChanged(parsedSettings, false); 
+        } catch (e) {
+          console.error('Error parsing settings from localStorage', e);
+        }
       }
     }
   }
@@ -258,8 +264,9 @@ export class GameBoardComponent implements OnInit {
   }
 
   addExclusion(team: 'white' | 'blue') {
-    const newExclusion = { id: Date.now(), time: 20 };
+    const newExclusion = { id: Date.now(), time: this.settings().exclusionDuration };
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
+
     if (team === 'white') {
       this.whiteExclusions.update(e => [...e, newExclusion]);
     } else {
@@ -270,6 +277,7 @@ export class GameBoardComponent implements OnInit {
 
   removeExclusion(team: 'white' | 'blue', id: number) {
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
+
     if (team === 'white') {
       this.whiteExclusions.update(e => e.filter(ex => ex.id !== id));
     } else {
@@ -291,6 +299,7 @@ export class GameBoardComponent implements OnInit {
   incrementScore(team: 'white' | 'blue') {
     this.saveStateForUndo();
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
+
     if (team === 'white') {
       this.whiteScore.update(s => s + 1);
     } else {
@@ -302,6 +311,7 @@ export class GameBoardComponent implements OnInit {
   decrementScore(team: 'white' | 'blue') {
     this.saveStateForUndo();
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
+
     if (team === 'white' && this.whiteScore() > 0) {
       this.whiteScore.update(s => s - 1);
       this.logService.addEntry(`Score for ${teamName} decremented to ${this.whiteScore()}`, '');
@@ -315,16 +325,20 @@ export class GameBoardComponent implements OnInit {
     this.showSettings.update(s => !s);
   }
 
-  onSettingsChanged(newSettings: Settings) {
+  onSettingsChanged(newSettings: Settings, toggle = true) {
     this.settings.set(newSettings);
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings));
     }
+    
     if (!this.running()) {
-        this.quarterTime.set(this.settings().quarterDuration * 60);
-        this.attackTime.set(this.settings().attackDuration);
+      this.quarterTime.set(this.settings().quarterDuration * 60);
+      this.attackTime.set(this.settings().attackDuration);
     }
+    
     this.logService.addEntry('Settings updated', '');
-    this.toggleSettings();
+    if (toggle) {
+      this.toggleSettings();
+    }
   }
 }
