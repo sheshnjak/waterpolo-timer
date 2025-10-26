@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, output, input, signal, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Settings } from '../settings';
+import { Settings } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService } from '../log.service';
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inje
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from '../settings/settings.component';
-import { Settings } from '../settings';
+import { Settings } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService } from '../log.service';
 
@@ -44,24 +44,6 @@ export class GameBoardComponent implements OnInit {
   isEditingQuarterTime = signal(false);
   isGameOver = signal(false);
   tempQuarterTime = signal('');
-
-  // Translations
-  translations = {
-    quarter: this.languageService.getTranslation('quarter'),
-    attack: this.languageService.getTranslation('attack'),
-    exclusions: this.languageService.getTranslation('exclusions'),
-    newAttack: this.languageService.getTranslation('newAttack'),
-    continueAttack: this.languageService.getTranslation('continueAttack'),
-    nextQuarter: this.languageService.getTranslation('nextQuarter'),
-    resetQuarter: this.languageService.getTranslation('resetQuarter'),
-    addExclusion: this.languageService.getTranslation('addExclusion'),
-    settings: this.languageService.getTranslation('settings'),
-    undo: this.languageService.getTranslation('undo'),
-    gameOver: this.languageService.getTranslation('gameOver'),
-    downloadLog: this.languageService.getTranslation('downloadLog'),
-    newGame: this.languageService.getTranslation('newGame'),
-    finalScore: this.languageService.getTranslation('finalScore'),
-  };
 
   quarterDisplay = computed(() => {
     const q = this.quarter();

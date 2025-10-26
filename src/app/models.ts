@@ -1,4 +1,4 @@
-export interface GameSettings {
+export interface Settings {
   quarterDuration: number;
   attackDuration: number;
   continuedAttackDuration: number;
@@ -21,6 +21,6 @@ export interface LogEntry {
 export interface GameLog {
   id: string;
   timestamp: string;
-  settings: GameSettings;
+  settings: Settings;
   log: LogEntry[];
 }
