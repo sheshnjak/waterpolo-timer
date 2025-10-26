@@ -77,10 +77,15 @@ main {
     font-size: 2rem;
     font-weight: normal;
     margin-bottom: -10px;
+    color: #aaa;
 }
 
 .attack-time.low {
   color: #f00;
+}
+
+.quarter-time.low {
+  color: #ff9800;
 }
 
 /* Scoreboard */
@@ -249,7 +254,20 @@ footer {
     background-color: #ff9800;
 }
 
-/* Game Over Dialog */
+/* Dialogs */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 dialog {
   background-color: #222;
   color: white;

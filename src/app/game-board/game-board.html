@@ -14,7 +14,7 @@
                 <input #quarterTimeInput type="text" [ngModel]="tempQuarterTime()" (ngModelChange)="tempQuarterTime.set($event)" (blur)="saveQuarterTime()" (keydown.enter)="saveQuarterTime()" class="time time-input" />
                 } @else {
                 <span class="quarter-inline-display" (click)="nextQuarter()">{{ quarterDisplay() }}</span>
-                <span class="time" (click)="editQuarterTime()">{{ formatTime(quarterTime()) }}</span>
+                <span class="time quarter-time" [class.low]="isQuarterTimeLow()" (click)="editQuarterTime()">{{ formatTime(quarterTime()) }}</span>
                 }
             </div>
             <div class="timer">
@@ -83,10 +83,22 @@
 }
 
 @if (isGameOver()) {
+<div class="dialog-overlay">
   <dialog open>
     <h2>{{ languageService.getTranslation('gameOver')() }}</h2>
     <p>{{ languageService.getTranslation('finalScore')() }}: {{ whiteScore() }} - {{ blueScore() }}</p>
     <button (click)="downloadLog()">{{ languageService.getTranslation('downloadLog')() }}</button>
     <button (click)="resetGame()">{{ languageService.getTranslation('newGame')() }}</button>
   </dialog>
+</div>
+}
+
+@if (showOvertimeDialog()) {
+<div class="dialog-overlay">
+  <dialog open>
+    <h2>{{ languageService.getTranslation('overtimePrompt')() }}</h2>
+    <button (click)="startOvertime()">{{ languageService.getTranslation('yes')() }}</button>
+    <button (click)="endGame()">{{ languageService.getTranslation('no')() }}</button>
+  </dialog>
+</div>
 }

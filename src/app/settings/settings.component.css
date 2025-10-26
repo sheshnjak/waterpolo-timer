@@ -15,16 +15,42 @@
     background: #222;
     padding: 20px;
     border-radius: 10px;
-    width: 400px;
+    width: 500px;
+    max-width: 90%;
     color: #fff;
   }
   
   h2 {
     margin-top: 0;
+    text-align: center;
+  }
+
+  .language-selector {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .language-selector img {
+    width: 40px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+  }
+  
+  .language-selector img.active {
+    border-color: #fff;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
   }
   
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
   
   label {
@@ -43,22 +69,6 @@
     color: #fff;
   }
   
-  .language-selector {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .language-selector img {
-    width: 40px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 5px;
-  }
-  
-  .language-selector img.active {
-    border-color: #fff;
-  }
-  
   .buttons {
     display: flex;
     justify-content: flex-end;
@@ -74,7 +84,8 @@
   }
   
   .recent-logs {
-    margin-top: 20px;
+    grid-column: 1 / -1; 
+    margin-top: 10px;
   }
   
   .recent-logs h3 {
@@ -85,7 +96,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 150px;
+    max-height: 120px;
     overflow-y: auto;
   }
   
@@ -93,7 +104,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
+    padding: 2px 5px;
+  }
+
+  .log-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
   }
   
   .button-save {
@@ -113,6 +131,16 @@
 
   .button-download {
     background-color: #4CAF50;
+    color: white;
+  }
+
+  .button-clear-incomplete {
+    background-color: #ff9800;
+    color: white;
+  }
+
+  .button-clear-all {
+    background-color: #f44336;
     color: white;
   }
   

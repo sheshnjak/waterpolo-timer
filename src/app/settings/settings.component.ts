@@ -39,6 +39,8 @@ export class SettingsComponent implements OnInit {
     downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
     saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
+    clearIncompleteLogs: this.languageService.getTranslation('clearIncompleteLogs'),
+    clearAllLogs: this.languageService.getTranslation('clearAllLogs'),
   };
 
   ngOnInit() {
@@ -71,5 +73,13 @@ export class SettingsComponent implements OnInit {
 
   downloadCurrentLog() {
     this.logService.downloadCsv('current_game_log.csv', this.logService.logEntries());
+  }
+
+  clearIncompleteLogs() {
+    this.logService.clearIncompleteLogs();
+  }
+
+  clearAllLogs() {
+    this.logService.clearAllLogs();
   }
 }

@@ -44,11 +44,14 @@ export class GameBoardComponent implements OnInit {
   isEditingQuarterTime = signal(false);
   isGameOver = signal(false);
   tempQuarterTime = signal('');
+  showOvertimeDialog = signal(false);
 
   quarterDisplay = computed(() => {
     const q = this.quarter();
     if (typeof q === 'number') {
       return `${q}/4`;
+    } else if (q === 'OT') {
+      return this.languageService.getTranslation('overtime')();
     }
     return q;
   });
@@ -69,6 +72,7 @@ export class GameBoardComponent implements OnInit {
   private timerTickCount = 0;
 
   isAttackTimeLow = computed(() => this.attackTime() <= 5);
+  isQuarterTimeLow = computed(() => this.quarterTime() <= 10);
 
   private quarterEndSound = new Audio('assets/sounds/quarter_end.mp3');
   private attackEndSound = new Audio('assets/sounds/attack_end.mp3');
@@ -124,7 +128,11 @@ export class GameBoardComponent implements OnInit {
               this.quarterEndSound.play();
               this.stopTimers();
               if (this.quarter() === 4) {
-                this.endGame();
+                if (this.whiteScore() === this.blueScore()) {
+                  this.showOvertimeDialog.set(true);
+                } else {
+                  this.endGame();
+                }
               }
             }
           }
@@ -192,19 +200,41 @@ export class GameBoardComponent implements OnInit {
   nextQuarter() {
     this.saveStateForUndo();
     this.logService.addEntry(`End of Quarter ${this.quarter()}`, '');
-    this.quarter.update(q => {
-        if (q === 4) {
-          this.endGame();
-          return 'END';
-        }
-        if (typeof q === 'number') return q + 1;
-        return 1;
-    });
+
+    if (this.quarter() === 4) {
+      if (this.whiteScore() === this.blueScore()) {
+        this.showOvertimeDialog.set(true);
+        return;
+      } else {
+        this.endGame();
+        this.quarter.set('END');
+        return;
+      }
+    }
+
+    if (this.quarter() === 'OT') {
+      if (this.whiteScore() !== this.blueScore()) {
+        this.endGame();
+        this.quarter.set('END');
+        return;
+      }
+    } else if (typeof this.quarter() === 'number') {
+      this.quarter.update(q => (q as number) + 1);
+    }
+
+    this.resetQuarter(false);
+  }
+
+  startOvertime() {
+    this.showOvertimeDialog.set(false);
+    this.quarter.set('OT');
+    this.logService.addEntry('Overtime started', '');
     this.resetQuarter(false);
   }
 
   endGame() {
     this.isGameOver.set(true);
+    this.showOvertimeDialog.set(false);
     this.logService.saveCurrentLog();
   }
 

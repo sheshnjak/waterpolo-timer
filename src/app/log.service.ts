@@ -67,4 +67,17 @@ export class LogService {
   clearCurrentLog() {
     this.logEntries.set([]);
   }
+
+  clearAllLogs() {
+    this.pastLogs.set([]);
+    localStorage.removeItem(LOG_STORAGE_KEY);
+  }
+
+  clearIncompleteLogs() {
+    this.pastLogs.update(logs => {
+      const completeLogs = logs.filter(log => log.entries.some(entry => entry.event === 'End of Quarter 4'));
+      localStorage.setItem(LOG_STORAGE_KEY, JSON.stringify(completeLogs));
+      return completeLogs;
+    });
+  }
 }

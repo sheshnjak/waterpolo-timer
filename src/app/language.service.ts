@@ -36,6 +36,11 @@ export class LanguageService {
       saveCurrentLogTitle: 'Save current log',
       finalScore: 'Final Score',
       newGame: 'New Game',
+      clearIncompleteLogs: 'Clear incomplete logs',
+      clearAllLogs: 'Clear all logs',
+      overtimePrompt: 'Overtime?',
+      yes: 'Yes',
+      no: 'No',
     },
     hr: {
       quarter: 'ČETVRTINA',
@@ -66,6 +71,11 @@ export class LanguageService {
       saveCurrentLogTitle: 'Spremi trenutni zapisnik',
       finalScore: 'Konačni rezultat',
       newGame: 'Nova igra',
+      clearIncompleteLogs: 'Izbriši nepotpune zapisnike',
+      clearAllLogs: 'Izbriši sve zapisnike',
+      overtimePrompt: 'Produžetak?',
+      yes: 'Da',
+      no: 'Ne',
     }
   };
 
