@@ -9,8 +9,8 @@
     </div>
 
     <div class="language-selector">
-      <img src="https://flagcdn.com/w40/gb.png" (click)="setLanguage('en')" [class.active]="languageService.getCurrentLanguage() === 'en'" alt="English">
-      <img src="https://flagcdn.com/w40/hr.png" (click)="setLanguage('hr')" [class.active]="languageService.getCurrentLanguage() === 'hr'" alt="Hrvatski">
+      <img src="https://flagcdn.com/w40/gb.png" (click)="setLanguage('en')" [class.active]="languageService.currentLanguage() === 'en'" alt="English">
+      <img src="https://flagcdn.com/w40/hr.png" (click)="setLanguage('hr')" [class.active]="languageService.currentLanguage() === 'hr'" alt="Hrvatski">
     </div>
 
     <div class="settings-grid">
@@ -51,7 +51,7 @@
             }
           </ul>
         } @else {
-          <p>No recent logs available.</p>
+          <p>{{ translations.noRecentLogs() }}</p>
         }
       </div>
 

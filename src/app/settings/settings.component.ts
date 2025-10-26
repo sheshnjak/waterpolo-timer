@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, output, input, signal, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, DatePipe } from '@angular/common';
-import { Settings } from '../models';
+import { Settings, GameLog } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService, LogEntry } from '../log.service';
 
 @Component({
   selector: 'app-settings',
-  imports: [FormsModule, CommonModule, DatePipe],
+  imports: [FormsModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,15 +14,15 @@ import { LogService, LogEntry } from '../log.service';
 export class SettingsComponent implements OnInit {
   languageService = inject(LanguageService);
   logService = inject(LogService);
-
+  
   settings = input.required<Settings>();
-  settingsChanged = output<Settings>();
-  close = output<void>();
-  resetQuarter = output<void>();
+  @Output() settingsChanged = new EventEmitter<Settings>();
+  @Output() close = new EventEmitter<void>();
+  @Output() resetQuarter = new EventEmitter<void>();
 
-  editedSettings = signal<Settings>({} as Settings);
-  homeTeamName = signal('');
-  awayTeamName = signal('');
+  editedSettings: WritableSignal<Settings>;
+  homeTeamName: string;
+  awayTeamName: string;
   pastLogs = this.logService.pastLogs;
 
   translations = {
@@ -34,30 +33,34 @@ export class SettingsComponent implements OnInit {
     homeTeamNameLabel: this.languageService.getTranslation('homeTeamName'),
     awayTeamNameLabel: this.languageService.getTranslation('awayTeamName'),
     save: this.languageService.getTranslation('save'),
-    language: this.languageService.getTranslation('language'),
     cancel: this.languageService.getTranslation('cancel'),
     recentLogs: this.languageService.getTranslation('recentLogs'),
     downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
     saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
-    clearIncompleteLogs: this.languageService.getTranslation('clearIncompleteLogs'),
-    clearAllLogs: this.languageService.getTranslation('clearAllLogs'),
+    noRecentLogs: this.languageService.getTranslation('noRecentLogs'),
   };
 
+  constructor() {
+    this.editedSettings = signal(this.settings() ?? { quarterDuration: 8, attackDuration: 30, exclusionDuration: 20, continuedAttackDuration: 20, homeTeamName: 'HOME', awayTeamName: 'AWAY' });
+    this.homeTeamName = this.editedSettings().homeTeamName;
+    this.awayTeamName = this.editedSettings().awayTeamName;
+  }
+
   ngOnInit() {
-    const currentSettings = this.settings();
-    this.editedSettings.set({ ...currentSettings });
-    this.homeTeamName.set(currentSettings.homeTeamName);
-    this.awayTeamName.set(currentSettings.awayTeamName);
+    this.editedSettings.set(this.settings());
+    this.homeTeamName = this.settings().homeTeamName;
+    this.awayTeamName = this.settings().awayTeamName;
   }
 
   onSave() {
-    const settings: Settings = {
+    const newSettings: Settings = {
       ...this.editedSettings(),
-      homeTeamName: this.homeTeamName(),
-      awayTeamName: this.awayTeamName(),
+      homeTeamName: this.homeTeamName,
+      awayTeamName: this.awayTeamName,
     };
-    this.settingsChanged.emit(settings);
+    this.settingsChanged.emit(newSettings);
+    this.logService.addEntry('Settings saved', '');
   }
 
   onClose() {
@@ -68,12 +71,21 @@ export class SettingsComponent implements OnInit {
     this.languageService.setLanguage(lang);
   }
 
-  downloadLog(log: { id: string; entries: any[] }) {
-    this.logService.downloadCsv(`log-${log.id}.csv`, log.entries);
+  formatLog(log: { id: string, entries: LogEntry[] }): string {
+    const finalScore = log.entries[log.entries.length - 1];
+    const date = new Date(log.id).toLocaleString();
+    return `Game from ${date} - Final Score: ${finalScore.details}`;
+  }
+
+  downloadLog(log: { id: string, entries: LogEntry[] }) {
+    const finalScore = log.entries[log.entries.length - 1];
+    const date = new Date(log.id).toISOString().split('T')[0];
+    const filename = `game_log_${date}_${finalScore.details.replace(' to ', '-')}.csv`;
+    this.logService.downloadCsv(filename, log.entries);
   }
 
   downloadCurrentLog() {
-    this.logService.downloadCsv('current_game_log.csv', this.logService.logEntries());
+    this.logService.saveCurrentLog();
   }
 
   clearIncompleteLogs() {
@@ -83,21 +95,4 @@ export class SettingsComponent implements OnInit {
   clearAllLogs() {
     this.logService.clearAllLogs();
   }
-  
-  formatLog(log: { id: string; entries: LogEntry[] }): string {
-    const datePipe = new DatePipe('en-US');
-    const formattedDate = datePipe.transform(log.id, 'yyyy.MM.dd HH:mm');
-    const finalScoreEntry = log.entries.slice().reverse().find(entry => entry.event.includes('Score for'));
-    
-    if (finalScoreEntry) {
-        const parts = finalScoreEntry.details.split(' to ');
-        const score = parts[1];
-        const team = finalScoreEntry.event.split(' for ')[1];
-
-        return `${formattedDate} ${this.homeTeamName()}:${this.awayTeamName()} ${team === this.homeTeamName() ? score : ''}:${team === this.awayTeamName() ? score : ''}`;
-    }
-
-    return `${formattedDate}`;
-  }
-
 }

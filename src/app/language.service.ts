@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 
 const LANGUAGE_STORAGE_KEY = 'waterpolo-timer-language';
 
@@ -6,100 +6,95 @@ const LANGUAGE_STORAGE_KEY = 'waterpolo-timer-language';
   providedIn: 'root'
 })
 export class LanguageService {
-  private translations: { [key: string]: { [key: string]: string } } = {
+  private translations: any = {
     en: {
-      quarter: 'QUARTER',
-      attack: 'ATTACK',
-      exclusions: 'EXCLUSIONS',
-      newAttack: 'NEW ATTACK',
-      resetAttack: 'RESET ATTACK',
-      continueAttack: 'CONTINUE ATTACK',
-      nextQuarter: 'NEXT QTR',
-      resetQuarter: 'Reset Quarter',
-      addExclusion: 'EXCLUSION',
-      settings: 'SETTINGS',
-      white: 'WHITE',
-      blue: 'BLUE',
-      quarterDuration: 'Quarter Duration (min)',
-      attackDuration: 'Attack Duration (sec)',
-      continuedAttackDuration: 'Continued Attack (sec)',
-      homeTeamName: 'Home Team Name',
-      awayTeamName: 'Away Team Name',
-      save: 'SAVE',
+      quarterDuration: 'Quarter duration (min)',
+      attackDuration: 'Attack duration (sec)',
+      exclusionDuration: 'Exclusion duration (sec)',
+      continuedAttackDuration: 'Continued attack (sec)',
+      homeTeamName: 'Home team name',
+      awayTeamName: 'Away team name',
+      save: 'Save',
       language: 'Language',
-      overtime: 'OVERTIME',
-      cancel: 'CANCEL',
-      gameOver: 'Game Over',
-      downloadLog: 'Download Log',
-      recentLogs: 'Recent Logs',
-      downloadCurrentLog: 'Download Current Log',
-      saveCurrentLogTitle: 'Save current log',
-      finalScore: 'Final Score',
-      newGame: 'New Game',
-      clearIncompleteLogs: 'Clear incomplete logs',
-      clearAllLogs: 'Clear all logs',
-      overtimePrompt: 'Overtime?',
+      cancel: 'Cancel',
+      exclusions: 'Exclusions',
+      nextQuarter: 'Next quarter',
+      addExclusion: 'Exclusion',
+      newAttack: 'New attack',
+      gameOver: 'Game over',
+      finalScore: 'Final score',
+      downloadLog: 'Download log',
+      newGame: 'New game',
+      overtimePrompt: 'The score is tied. Start overtime? ',
       yes: 'Yes',
       no: 'No',
+      overtime: 'OT',
+      recentLogs: 'Recent Logs',
+      downloadCurrentLog: 'Download Current Log',
+      resetQuarter: 'Reset Quarter',
+      saveCurrentLogTitle: 'Save & Start New Game',
+      clearIncompleteLogs: 'Clear Incomplete Logs',
+      clearAllLogs: 'Clear All Logs',
+      addGoal: '+ GOAL',
+      goalScoredBy: 'Goal scored by',
+      noRecentLogs: 'No recent logs available.',
     },
     hr: {
-      quarter: 'ČETVRTINA',
-      attack: 'NAPAD',
-      exclusions: 'ISKLJUČENJA',
-      newAttack: 'NOVI NAPAD',
-      resetAttack: 'RESET NAPADA',
-      continueAttack: 'NASTAVAK NAPADA',
-      nextQuarter: 'SLJEDEĆA ČETVRTINA',
-      resetQuarter: 'Reset četvrtine',
-      addExclusion: 'ISKLJUČENJE',
-      settings: 'POSTAVKE',
-      white: 'BIJELI',
-      blue: 'PLAVI',
       quarterDuration: 'Trajanje četvrtine (min)',
-      attackDuration: 'Trajanje napada (sek)',
-      continuedAttackDuration: 'Nastavak napada (sek)',
+      attackDuration: 'Trajanje napada (sec)',
+      exclusionDuration: 'Trajanje isključenja (sec)',
+      continuedAttackDuration: 'Nastavak napada (sec)',
       homeTeamName: 'Ime domaćina',
       awayTeamName: 'Ime gosta',
-      save: 'SPREMI',
+      save: 'Spremi',
       language: 'Jezik',
-      overtime: 'PRODUŽETAK',
-      cancel: 'ODUSTANI',
-      gameOver: 'Kraj utakmice',
-      downloadLog: 'Preuzmi zapisnik',
-      recentLogs: 'Nedavni zapisnici',
-      downloadCurrentLog: 'Preuzmi trenutni zapisnik',
-      saveCurrentLogTitle: 'Spremi trenutni zapisnik',
+      cancel: 'Odustani',
+      exclusions: 'Isključenja',
+      nextQuarter: 'Sljedeća četvrtina',
+      addExclusion: 'Isključenje',
+      newAttack: 'Novi napad',
+      gameOver: 'Kraj igre',
       finalScore: 'Konačni rezultat',
+      downloadLog: 'Preuzmi zapisnik',
       newGame: 'Nova igra',
-      clearIncompleteLogs: 'Izbriši nepotpune zapisnike',
-      clearAllLogs: 'Izbriši sve zapisnike',
-      overtimePrompt: 'Produžetak?',
+      overtimePrompt: 'Rezultat je izjednačen. Započeti produžetke?',
       yes: 'Da',
       no: 'Ne',
+      overtime: 'OT',
+      recentLogs: 'Nedavni zapisnici',
+      downloadCurrentLog: 'Preuzmi trenutni zapisnik',
+      resetQuarter: 'Resetiraj četvrtinu',
+      saveCurrentLogTitle: 'Spremi i započni novu igru',
+      clearIncompleteLogs: 'Očisti nepotpune zapisnike',
+      clearAllLogs: 'Očisti sve zapisnike',
+      addGoal: '+ GOL',
+      goalScoredBy: 'Gol je postigao',
+      noRecentLogs: 'Nema dostupnih nedavnih zapisa.',
     }
   };
 
-  private language = signal(this.getInitialLanguage());
+  currentLanguage = signal(this.getInitialLanguage());
+
+  constructor() {
+    effect(() => {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, this.currentLanguage());
+      }
+    });
+  }
 
   private getInitialLanguage(): string {
-    if (typeof localStorage !== 'undefined') {
+    if (typeof window !== 'undefined' && window.localStorage) {
       return localStorage.getItem(LANGUAGE_STORAGE_KEY) || 'en';
     }
     return 'en';
   }
 
-  getTranslation(key: string) {
-    return computed(() => this.translations[this.language()]?.[key] || key);
-  }
-
   setLanguage(lang: string) {
-    this.language.set(lang);
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
-    }
+    this.currentLanguage.set(lang);
   }
 
-  getCurrentLanguage() {
-    return this.language();
+  getTranslation(key: string) {
+    return () => this.translations[this.currentLanguage()][key] || key;
   }
 }

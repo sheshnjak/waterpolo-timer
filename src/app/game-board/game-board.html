@@ -62,11 +62,11 @@
                 <div class="team-controls">
                     <button class="control-button button-white" (click)="addExclusion('white')">{{ languageService.getTranslation('addExclusion')() }}</button>
                     <button class="control-button button-white" (click)="decrementScore('white')">-</button>
-                    <button class="control-button button-white" (click)="incrementScore('white')">+ GOL</button>
+                    <button class="control-button button-white" (click)="incrementScore('white')">{{ translations.addGoal() }}</button>
                 </div>
                 <div class="team-controls">
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
-                    <button class="control-button button-blue" (click)="incrementScore('blue')">+ GOL</button>
+                    <button class="control-button button-blue" (click)="incrementScore('blue')">{{ translations.addGoal() }}</button>
                     <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>                </div>
                 <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
             </div>

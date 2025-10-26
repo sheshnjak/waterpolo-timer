@@ -30,6 +30,10 @@ export class GameBoardComponent implements OnInit {
   logService = inject(LogService);
   @ViewChild('quarterTimeInput') quarterTimeInput: ElementRef | undefined;
 
+  translations = {
+    addGoal: this.languageService.getTranslation('addGoal'),
+  };
+
   // Game state signals
   quarter = signal<number | string>(1);
   quarterTime = signal(8 * 60);
@@ -333,7 +337,7 @@ export class GameBoardComponent implements OnInit {
     } else {
       this.blueScore.update(s => s + 1);
     }
-    this.logService.addEntry(`Score for ${teamName} incremented to ${team === 'white' ? this.whiteScore() : this.blueScore()}`, '');
+    this.logService.addEntry(`Score for ${teamName}`, `${this.whiteScore()} to ${this.blueScore()}`);
   }
 
   decrementScore(team: 'white' | 'blue') {
