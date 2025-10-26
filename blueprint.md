@@ -12,6 +12,7 @@ This application is a feature-rich water polo timer designed for both official g
 - **Team Names:** Editable names for both competing teams.
 - **Sound Notifications:** Audio cues for the end of a quarter and the end of an attack.
 - **Multilingual Support:** The interface is available in English and Croatian.
+- **Automatic Team Name Translation:** Default team names (White/Blue and Bijeli/Plavi) are automatically translated when the language is changed. Custom team names are not affected.
 - **Game Log:** A detailed log of all game events, which can be downloaded as a CSV file.
 - **Settings Panel:** A comprehensive settings panel to customize game parameters.
 - **Recent Logs:** A list of recent game logs, with the ability to download each one.
@@ -22,6 +23,7 @@ This application is a feature-rich water polo timer designed for both official g
 
 I will continue to add more features and improvements to the application. The following is a list of changes that I have just implemented:
 
+- **Implemented Automatic Team Name Translation:** Added logic to the `settings.component.ts` that automatically translates the team names between English and Croatian when the language is changed, but only if the team names are the default values (White/Blue or Bijeli/Plavi). If the team names have been customized, they will not be translated.
 - Added `goalScoredBy` and `noRecentLogs` translations to the `language.service.ts` to support internationalization for the goal log message and the "no recent logs" message in the settings panel.
 - Updated the `game-board.component.ts` to use the new `goalScoredBy` translation when logging a goal.
 - Updated the `settings.component.ts` to use the new `noRecentLogs` translation.

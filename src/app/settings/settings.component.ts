@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Settings } from '../models';
 import { LanguageService } from '../language.service';
@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
   homeTeamName!: string;
   awayTeamName!: string;
   pastLogs = this.logService.pastLogs;
+  private previousLang: string;
 
   translations = {
     quarterDuration: this.languageService.getTranslation('quarterDuration'),
@@ -42,14 +43,46 @@ export class SettingsComponent implements OnInit {
   };
 
   constructor() {
-    // Input properties are not available in the constructor.
-    // Initialization is moved to ngOnInit.
+    this.previousLang = this.languageService.currentLanguage();
+    effect(() => {
+      const newLang = this.languageService.currentLanguage();
+      this.handleLanguageChange(newLang);
+      this.previousLang = newLang;
+    });
   }
 
   ngOnInit() {
     this.editedSettings = signal(this.settings());
     this.homeTeamName = this.settings().homeTeamName;
     this.awayTeamName = this.settings().awayTeamName;
+  }
+
+  private handleLanguageChange(newLang: string) {
+    if (!this.homeTeamName || !this.awayTeamName) {
+      return;
+    }
+
+    const oldLang = this.previousLang;
+    if (oldLang === newLang) {
+      return;
+    }
+
+    const defaultNames: { [lang: string]: { home: string; away: string } } = {
+      en: { home: 'WHITE', away: 'BLUE' },
+      hr: { home: 'BIJELI', away: 'PLAVI' },
+    };
+
+    const oldDefaults = defaultNames[oldLang];
+    const newDefaults = defaultNames[newLang];
+
+    if (oldDefaults && newDefaults) {
+      if (this.homeTeamName.toUpperCase() === oldDefaults.home) {
+        this.homeTeamName = newDefaults.home;
+      }
+      if (this.awayTeamName.toUpperCase() === oldDefaults.away) {
+        this.awayTeamName = newDefaults.away;
+      }
+    }
   }
 
   onSave() {
@@ -71,12 +104,16 @@ export class SettingsComponent implements OnInit {
   }
 
   formatLog(log: { id: string, entries: LogEntry[] }): string {
+    if (log.entries.length === 0) {
+      return `Game from ${new Date(log.id).toLocaleString()} - No entries`;
+    }
     const finalScore = log.entries[log.entries.length - 1];
     const date = new Date(log.id).toLocaleString();
     return `Game from ${date} - Final Score: ${finalScore.details}`;
   }
 
   downloadLog(log: { id: string, entries: LogEntry[] }) {
+    if (log.entries.length === 0) return;
     const finalScore = log.entries[log.entries.length - 1];
     const date = new Date(log.id).toISOString().split('T')[0];
     const filename = `game_log_${date}_${finalScore.details.replace(' to ', '-')}.csv`;
