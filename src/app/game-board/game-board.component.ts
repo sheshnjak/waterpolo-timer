@@ -133,6 +133,8 @@ export class GameBoardComponent implements OnInit {
                 } else {
                   this.endGame();
                 }
+              } else if (this.quarter() === 'OT') {
+                this.endGame();
               }
             }
           }
@@ -210,14 +212,10 @@ export class GameBoardComponent implements OnInit {
         this.quarter.set('END');
         return;
       }
-    }
-
-    if (this.quarter() === 'OT') {
-      if (this.whiteScore() !== this.blueScore()) {
+    } else if (this.quarter() === 'OT') {
         this.endGame();
         this.quarter.set('END');
         return;
-      }
     } else if (typeof this.quarter() === 'number') {
       this.quarter.update(q => (q as number) + 1);
     }

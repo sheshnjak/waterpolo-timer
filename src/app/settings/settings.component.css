@@ -18,8 +18,16 @@
     width: 500px;
     max-width: 90%;
     color: #fff;
+    font-family: sans-serif;
   }
   
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
   h2 {
     margin-top: 0;
     text-align: center;

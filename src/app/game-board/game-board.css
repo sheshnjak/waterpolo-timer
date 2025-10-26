@@ -276,6 +276,7 @@ dialog {
   padding: 20px;
   width: 300px;
   text-align: center;
+  font-family: sans-serif;
 }
 
 dialog::backdrop {
