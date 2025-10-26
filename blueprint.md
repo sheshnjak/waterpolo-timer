@@ -22,7 +22,7 @@ This application is a feature-rich water polo timer designed for both official g
 
 I will continue to add more features and improvements to the application. The following is a list of changes that I have just implemented:
 
-- Added an `addGoal` translation to the `language.service.ts` to support internationalization for the goal buttons.
-- Updated the `game-board.component.ts` to provide the `addGoal` translation to the template.
-- Replaced the hard-coded "+ GOL" text in `game-board.html` with the new `addGoal` translation key.
-- Fixed a bug in `settings.component.html` that was causing a build error due to an incorrect method call on the `LanguageService`.
+- Added `goalScoredBy` and `noRecentLogs` translations to the `language.service.ts` to support internationalization for the goal log message and the "no recent logs" message in the settings panel.
+- Updated the `game-board.component.ts` to use the new `goalScoredBy` translation when logging a goal.
+- Updated the `settings.component.ts` to use the new `noRecentLogs` translation.
+- Fixed a series of build errors in `settings.component.ts` related to incorrectly accessing an `@Input()` property in the constructor, an incorrect import of a `Team` model that didn't exist, type mismatches between the component's understanding of the `GameLog` object and the actual implementation in `log.service.ts` and `models.ts`, and incorrect method calls to the `log.service.ts`.

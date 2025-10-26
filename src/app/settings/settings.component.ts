@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Settings, GameLog } from '../models';
+import { Settings } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService, LogEntry } from '../log.service';
 
@@ -20,9 +20,9 @@ export class SettingsComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() resetQuarter = new EventEmitter<void>();
 
-  editedSettings: WritableSignal<Settings>;
-  homeTeamName: string;
-  awayTeamName: string;
+  editedSettings!: WritableSignal<Settings>;
+  homeTeamName!: string;
+  awayTeamName!: string;
   pastLogs = this.logService.pastLogs;
 
   translations = {
@@ -42,13 +42,12 @@ export class SettingsComponent implements OnInit {
   };
 
   constructor() {
-    this.editedSettings = signal(this.settings() ?? { quarterDuration: 8, attackDuration: 30, exclusionDuration: 20, continuedAttackDuration: 20, homeTeamName: 'HOME', awayTeamName: 'AWAY' });
-    this.homeTeamName = this.editedSettings().homeTeamName;
-    this.awayTeamName = this.editedSettings().awayTeamName;
+    // Input properties are not available in the constructor.
+    // Initialization is moved to ngOnInit.
   }
 
   ngOnInit() {
-    this.editedSettings.set(this.settings());
+    this.editedSettings = signal(this.settings());
     this.homeTeamName = this.settings().homeTeamName;
     this.awayTeamName = this.settings().awayTeamName;
   }
