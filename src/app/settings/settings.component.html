@@ -58,6 +58,7 @@
       <div class="log-actions">
           <button class="button-clear-incomplete" (click)="clearIncompleteLogs()">{{ languageService.getTranslation('clearIncompleteLogs')() }}</button>
           <button class="button-clear-all" (click)="clearAllLogs()">{{ languageService.getTranslation('clearAllLogs')() }}</button>
+          <button class="button-reset-all" (click)="onResetAllClick()">{{ languageService.getTranslation('resetAll')() }}</button>
       </div>
     </div>
 

@@ -79,7 +79,7 @@
 </div>
 
 @if (showSettings()) {
-<app-settings [settings]="settings()" (settingsChanged)="onSettingsChanged($event)" (close)="toggleSettings()" (resetQuarter)="resetQuarter()"></app-settings>
+<app-settings [settings]="settings()" (settingsChanged)="onSettingsChanged($event)" (close)="toggleSettings()" (resetQuarter)="resetQuarter()" (resetAll)="resetEverything()"></app-settings>
 }
 
 @if (isGameOver()) {

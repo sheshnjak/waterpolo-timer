@@ -38,6 +38,7 @@ export class LanguageService {
       addGoal: '+ GOAL',
       goalScoredBy: 'Goal scored by',
       noRecentLogs: 'No recent logs available.',
+      resetAll: 'Reset All',
     },
     hr: {
       quarterDuration: 'Trajanje četvrtine (min)',
@@ -70,6 +71,7 @@ export class LanguageService {
       addGoal: '+ GOL',
       goalScoredBy: 'Gol je postigao',
       noRecentLogs: 'Nema dostupnih nedavnih zapisa.',
+      resetAll: 'Resetiraj sve',
     }
   };
 

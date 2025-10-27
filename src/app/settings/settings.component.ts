@@ -19,6 +19,8 @@ export class SettingsComponent implements OnInit {
   @Output() settingsChanged = new EventEmitter<Settings>();
   @Output() close = new EventEmitter<void>();
   @Output() resetQuarter = new EventEmitter<void>();
+  @Output() resetAll = new EventEmitter<void>();
+
 
   editedSettings!: WritableSignal<Settings>;
   homeTeamName!: string;
@@ -40,7 +42,8 @@ export class SettingsComponent implements OnInit {
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
     saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
     noRecentLogs: this.languageService.getTranslation('noRecentLogs'),
-    downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog')
+    downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
+    resetAll: this.languageService.getTranslation('resetAll')
   };
 
   constructor() {
@@ -98,6 +101,10 @@ export class SettingsComponent implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  onResetAllClick() {
+    this.resetAll.emit();
   }
 
   setLanguage(lang: string) {

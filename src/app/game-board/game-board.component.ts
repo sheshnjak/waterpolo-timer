@@ -382,4 +382,18 @@ export class GameBoardComponent implements OnInit {
       this.toggleSettings();
     }
   }
+
+  resetEverything() {
+    const defaultSettings: Settings = {
+      quarterDuration: 8,
+      attackDuration: 30,
+      continuedAttackDuration: 20,
+      exclusionDuration: 20,
+      homeTeamName: 'WHITE',
+      awayTeamName: 'BLUE',
+    };
+    this.onSettingsChanged(defaultSettings, false);
+    this.resetGame();
+    this.toggleSettings();
+  }
 }
