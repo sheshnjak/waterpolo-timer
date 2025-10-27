@@ -103,13 +103,20 @@ export class GameBoardComponent implements OnInit {
   ngOnInit() {
     this.quarterTime.set(this.settings().quarterDuration * 60);
     this.attackTime.set(this.settings().attackDuration);
-    this.logService.addEntry('Game started', '');
+    this.logService.addEntry('Start of Quarter', '1', 1, '0:00', 0, 0);
+  }
+
+  private getGameTime(): string {
+    const quarterDuration = this.settings().quarterDuration * 60;
+    const timeElapsed = quarterDuration - this.quarterTime();
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = Math.floor(timeElapsed % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
   toggleTimers() {
     this.running.set(!this.running());
     if (this.running()) {
-      this.logService.addEntry('Timer started', '');
       this.intervalId = setInterval(() => {
         this.timerTickCount++;
 
@@ -161,7 +168,6 @@ export class GameBoardComponent implements OnInit {
         }
       }, 100);
     } else {
-      this.logService.addEntry('Timer stopped', '');
       this.stopTimers();
     }
   }
@@ -188,7 +194,6 @@ export class GameBoardComponent implements OnInit {
 
   undoLastAction() {
     if (this.lastState) {
-      this.logService.addEntry('Undo action performed', '');
       this.quarter.set(this.lastState.quarter);
       this.quarterTime.set(this.lastState.quarterTime);
       this.attackTime.set(this.lastState.attackTime);
@@ -205,14 +210,14 @@ export class GameBoardComponent implements OnInit {
   resetAttackTime(seconds: number) {
     const newAttackTime = Math.min(seconds, this.quarterTime());
     this.attackTime.set(newAttackTime);
-    this.logService.addEntry(`Attack time reset to ${newAttackTime}`, '');
   }
 
   nextQuarter() {
     this.saveStateForUndo();
-    this.logService.addEntry(`End of Quarter ${this.quarter()}`, '');
+    const currentQuarter = this.quarter();
+    this.logService.addEntry('End of Quarter', `${currentQuarter}`, currentQuarter as number, this.getGameTime(), this.whiteScore(), this.blueScore());
 
-    if (this.quarter() === 4) {
+    if (currentQuarter === 4) {
       if (this.whiteScore() === this.blueScore()) {
         this.showOvertimeDialog.set(true);
         return;
@@ -221,12 +226,14 @@ export class GameBoardComponent implements OnInit {
         this.quarter.set('END');
         return;
       }
-    } else if (this.quarter() === 'OT') {
+    } else if (currentQuarter === 'OT') {
         this.endGame(true);
         this.quarter.set('END');
         return;
-    } else if (typeof this.quarter() === 'number') {
-      this.quarter.update(q => (q as number) + 1);
+    } else if (typeof currentQuarter === 'number') {
+      const newQuarter = currentQuarter + 1;
+      this.quarter.set(newQuarter);
+      this.logService.addEntry('Start of Quarter', `${newQuarter}`, newQuarter, '0:00', this.whiteScore(), this.blueScore());
     }
 
     this.resetQuarter(false);
@@ -235,7 +242,7 @@ export class GameBoardComponent implements OnInit {
   startOvertime() {
     this.showOvertimeDialog.set(false);
     this.quarter.set('OT');
-    this.logService.addEntry('Overtime started', '');
+    this.logService.addEntry('Start of Overtime', '', 5, '0:00', this.whiteScore(), this.blueScore());
     this.resetQuarter(false);
   }
 
@@ -251,7 +258,7 @@ export class GameBoardComponent implements OnInit {
     this.whiteScore.set(0);
     this.blueScore.set(0);
     this.logService.clearCurrentLog();
-    this.logService.addEntry('New game started', '');
+    this.logService.addEntry('Start of Quarter', '1', 1, '0:00', 0, 0);
     this.resetQuarter(false);
   }
 
@@ -276,9 +283,7 @@ export class GameBoardComponent implements OnInit {
       const minutes = parseInt(timeParts[0], 10);
       const seconds = parseInt(timeParts[1], 10);
       if (!isNaN(minutes) && !isNaN(seconds)) {
-        const newQuarterTime = minutes * 60 + seconds;
-        this.quarterTime.set(newQuarterTime);
-        this.logService.addEntry(`Quarter time manually set to ${this.formatTime(newQuarterTime)}`, '');
+        this.quarterTime.set(minutes * 60 + seconds);
       }
     }
     this.isEditingQuarterTime.set(false);
@@ -300,7 +305,6 @@ export class GameBoardComponent implements OnInit {
         this.attackEndSound.currentTime = 0;
     }
     this.timerTickCount = 0;
-    this.logService.addEntry('Quarter reset', '');
   }
 
   addExclusion(team: 'white' | 'blue') {
@@ -312,18 +316,15 @@ export class GameBoardComponent implements OnInit {
     } else {
       this.blueExclusions.update(e => [...e, newExclusion]);
     }
-    this.logService.addEntry(`Exclusion added for ${teamName}`, '');
+    this.logService.addEntry('Exclusion', teamName, this.quarter() as number, this.getGameTime(), this.whiteScore(), this.blueScore());
   }
 
   removeExclusion(team: 'white' | 'blue', id: number) {
-    const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
-
     if (team === 'white') {
       this.whiteExclusions.update(e => e.filter(ex => ex.id !== id));
     } else {
       this.blueExclusions.update(e => e.filter(ex => ex.id !== id));
     }
-    this.logService.addEntry(`Exclusion removed for ${teamName}`, '');
   }
 
   formatTime(seconds: number): string {
@@ -340,24 +341,25 @@ export class GameBoardComponent implements OnInit {
     this.saveStateForUndo();
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
 
+    let newWhiteScore = this.whiteScore();
+    let newBlueScore = this.blueScore();
+
     if (team === 'white') {
-      this.whiteScore.update(s => s + 1);
+      newWhiteScore++;
+      this.whiteScore.set(newWhiteScore);
     } else {
-      this.blueScore.update(s => s + 1);
+      newBlueScore++;
+      this.blueScore.set(newBlueScore);
     }
-    this.logService.addEntry(`Score for ${teamName}`, `${this.whiteScore()} to ${this.blueScore()}`);
+    this.logService.addEntry('Goal', teamName, this.quarter() as number, this.getGameTime(), newWhiteScore, newBlueScore);
   }
 
   decrementScore(team: 'white' | 'blue') {
     this.saveStateForUndo();
-    const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
-
     if (team === 'white' && this.whiteScore() > 0) {
       this.whiteScore.update(s => s - 1);
-      this.logService.addEntry(`Score for ${teamName} decremented to ${this.whiteScore()}`, '');
     } else if (team === 'blue' && this.blueScore() > 0) {
       this.blueScore.update(s => s - 1);
-      this.logService.addEntry(`Score for ${teamName} decremented to ${this.blueScore()}`, '');
     }
   }
 
@@ -376,7 +378,6 @@ export class GameBoardComponent implements OnInit {
       this.attackTime.set(this.settings().attackDuration);
     }
     
-    this.logService.addEntry('Settings updated', '');
     if (toggle) {
       this.toggleSettings();
     }

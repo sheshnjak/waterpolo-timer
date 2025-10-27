@@ -10,12 +10,12 @@ export interface Settings {
 export interface LogEntry {
   id: string;
   timestamp: string;
+  event: string;
+  details: string;
   whiteScore: number;
   blueScore: number;
   quarter: number | string;
   gameTime: string;
-  attackTime: string;
-  details: string;
 }
 
 export interface GameLog {

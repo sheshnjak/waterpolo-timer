@@ -93,7 +93,7 @@ export class SettingsComponent implements OnInit {
       awayTeamName: this.awayTeamName,
     };
     this.settingsChanged.emit(newSettings);
-    this.logService.addEntry('Settings saved', '');
+    this.logService.addEntry('Settings saved', '', 0, '', 0, 0);
   }
 
   onClose() {

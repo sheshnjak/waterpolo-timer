@@ -14,23 +14,24 @@ export class LogService {
     this.loadPastLogs();
   }
 
-  addEntry(event: string, details: string) {
-    this.logEntries.update(entries => [...entries, { 
+  addEntry(event: string, details: string, quarter: number, gameTime: string, whiteScore: number, blueScore: number) {
+    this.logEntries.update(entries => [...entries, {
       id: new Date().toISOString(),
-      timestamp: new Date().toISOString(), 
+      timestamp: new Date().toISOString(),
       event,
       details,
-      whiteScore: 0,
-      blueScore: 0,
-      quarter: 0,
-      gameTime: '',
-      attackTime: ''
-    } as LogEntry]);
+      whiteScore,
+      blueScore,
+      quarter,
+      gameTime
+    }]);
   }
 
   generateCsv(entries: LogEntry[]): string {
-    const header = 'Timestamp,Event,Details\n';
-    const rows = entries.map(e => `${e.timestamp},${(e as any).event},"${(e as any).details}"`).join('\n');
+    const header = 'Quarter,Game Clock,Event,Details,Score\n';
+    const rows = entries
+      .map(e => `${e.quarter},${e.gameTime},${e.event},"${e.details}","${e.whiteScore}-${e.blueScore}"`)
+      .join('\n');
     return header + rows;
   }
 
@@ -104,6 +105,7 @@ export class LogService {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
-    return `${year}.${month}.${day} ${hours}:${minutes} - ${log.homeTeamName}:${log.awayTeamName} ${log.whiteScore}:${log.blueScore}.csv`;
+    const baseName = `${year}.${month}.${day} ${hours}:${minutes} - ${log.homeTeamName}:${log.awayTeamName} ${log.whiteScore}:${log.blueScore}.csv`;
+    return baseName.replace(/:/g, '.');
   }
 }
