@@ -32,6 +32,11 @@ export class GameBoardComponent implements OnInit {
 
   translations = {
     addGoal: this.languageService.getTranslation('addGoal'),
+    gameOver: this.languageService.getTranslation('gameOver'),
+    finalScore: this.languageService.getTranslation('finalScore'),
+    download: this.languageService.getTranslation('download'),
+    startNewGame: this.languageService.getTranslation('newGame'),
+    overtime: this.languageService.getTranslation('overtime')
   };
 
   // Game state signals
@@ -135,10 +140,10 @@ export class GameBoardComponent implements OnInit {
                 if (this.whiteScore() === this.blueScore()) {
                   this.showOvertimeDialog.set(true);
                 } else {
-                  this.endGame();
+                  this.endGame(true);
                 }
               } else if (this.quarter() === 'OT') {
-                this.endGame();
+                this.endGame(true);
               }
             }
           }
@@ -212,12 +217,12 @@ export class GameBoardComponent implements OnInit {
         this.showOvertimeDialog.set(true);
         return;
       } else {
-        this.endGame();
+        this.endGame(true);
         this.quarter.set('END');
         return;
       }
     } else if (this.quarter() === 'OT') {
-        this.endGame();
+        this.endGame(true);
         this.quarter.set('END');
         return;
     } else if (typeof this.quarter() === 'number') {
@@ -234,10 +239,10 @@ export class GameBoardComponent implements OnInit {
     this.resetQuarter(false);
   }
 
-  endGame() {
+  endGame(completed: boolean) {
     this.isGameOver.set(true);
     this.showOvertimeDialog.set(false);
-    this.logService.saveCurrentLog();
+    this.logService.saveCurrentLog(this.settings(), this.whiteScore(), this.blueScore(), completed);
   }
 
   resetGame() {
@@ -251,8 +256,11 @@ export class GameBoardComponent implements OnInit {
   }
 
 
-  downloadLog() {
-    this.logService.downloadCsv('game_log.csv', this.logService.logEntries());
+  downloadFinalLog() {
+    const finalLog = this.logService.pastLogs()[0];
+    if (finalLog) {
+      this.logService.downloadCsv(finalLog);
+    }
   }
 
   editQuarterTime() {

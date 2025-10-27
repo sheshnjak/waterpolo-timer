@@ -1,53 +1,68 @@
 import { Injectable, signal } from '@angular/core';
+import { GameLog, LogEntry, Settings } from './models';
 
 const LOG_STORAGE_KEY = 'waterpolo-timer-logs';
-
-export interface LogEntry {
-  timestamp: Date;
-  event: string;
-  details: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogService {
   logEntries = signal<LogEntry[]>([]);
-  pastLogs = signal<{ id: string; entries: LogEntry[] }[]>([]);
+  pastLogs = signal<GameLog[]>([]);
 
   constructor() {
     this.loadPastLogs();
   }
 
   addEntry(event: string, details: string) {
-    this.logEntries.update(entries => [...entries, { timestamp: new Date(), event, details }]);
+    this.logEntries.update(entries => [...entries, { 
+      id: new Date().toISOString(),
+      timestamp: new Date().toISOString(), 
+      event,
+      details,
+      whiteScore: 0,
+      blueScore: 0,
+      quarter: 0,
+      gameTime: '',
+      attackTime: ''
+    } as LogEntry]);
   }
 
   generateCsv(entries: LogEntry[]): string {
     const header = 'Timestamp,Event,Details\n';
-    const rows = entries.map(e => `${e.timestamp.toISOString()},${e.event},"${e.details}"`).join('\n');
+    const rows = entries.map(e => `${e.timestamp},${(e as any).event},"${(e as any).details}"`).join('\n');
     return header + rows;
   }
 
-  downloadCsv(filename: string, entries: LogEntry[]) {
-    const csv = this.generateCsv(entries);
+  downloadCsv(log: GameLog) {
+    const csv = this.generateCsv(log.log);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', filename);
+    link.setAttribute('download', this.getLogFileName(log));
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   }
 
-  saveCurrentLog() {
+  saveCurrentLog(settings: Settings, whiteScore: number, blueScore: number, completed: boolean) {
     const currentEntries = this.logEntries();
     if (currentEntries.length === 0) return;
 
     this.pastLogs.update(logs => {
-      const newLog = { id: new Date().toISOString(), entries: currentEntries };
+      const newLog: GameLog = {
+        id: new Date().toISOString(),
+        timestamp: new Date().toISOString(),
+        settings,
+        log: currentEntries,
+        completed,
+        homeTeamName: settings.homeTeamName,
+        awayTeamName: settings.awayTeamName,
+        whiteScore,
+        blueScore
+      };
       const updatedLogs = [newLog, ...logs].slice(0, 5);
       localStorage.setItem(LOG_STORAGE_KEY, JSON.stringify(updatedLogs));
       return updatedLogs;
@@ -75,9 +90,20 @@ export class LogService {
 
   clearIncompleteLogs() {
     this.pastLogs.update(logs => {
-      const completeLogs = logs.filter(log => log.entries.some(entry => entry.event === 'End of Quarter 4'));
+      const completeLogs = logs.filter(log => log.completed);
       localStorage.setItem(LOG_STORAGE_KEY, JSON.stringify(completeLogs));
       return completeLogs;
     });
+  }
+
+  getLogFileName(log: GameLog): string {
+    const date = new Date(log.timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${year}.${month}.${day} ${hours}:${minutes} - ${log.homeTeamName}:${log.awayTeamName} ${log.whiteScore}:${log.blueScore}.csv`;
   }
 }

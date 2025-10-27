@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Settings } from '../models';
+import { GameLog, LogEntry, Settings } from '../models';
 import { LanguageService } from '../language.service';
-import { LogService, LogEntry } from '../log.service';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-settings',
@@ -36,10 +36,11 @@ export class SettingsComponent implements OnInit {
     save: this.languageService.getTranslation('save'),
     cancel: this.languageService.getTranslation('cancel'),
     recentLogs: this.languageService.getTranslation('recentLogs'),
-    downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
+    download: this.languageService.getTranslation('download'),
     resetQuarter: this.languageService.getTranslation('resetQuarter'),
     saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
     noRecentLogs: this.languageService.getTranslation('noRecentLogs'),
+    downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog')
   };
 
   constructor() {
@@ -103,25 +104,29 @@ export class SettingsComponent implements OnInit {
     this.languageService.setLanguage(lang);
   }
 
-  formatLog(log: { id: string, entries: LogEntry[] }): string {
-    if (log.entries.length === 0) {
-      return `Game from ${new Date(log.id).toLocaleString()} - No entries`;
-    }
-    const finalScore = log.entries[log.entries.length - 1];
-    const date = new Date(log.id).toLocaleString();
-    return `Game from ${date} - Final Score: ${finalScore.details}`;
+  formatLog(log: GameLog): string {
+    return this.logService.getLogFileName(log).replace('.csv', '');
   }
 
-  downloadLog(log: { id: string, entries: LogEntry[] }) {
-    if (log.entries.length === 0) return;
-    const finalScore = log.entries[log.entries.length - 1];
-    const date = new Date(log.id).toISOString().split('T')[0];
-    const filename = `game_log_${date}_${finalScore.details.replace(' to ', '-')}.csv`;
-    this.logService.downloadCsv(filename, log.entries);
+  downloadLog(log: GameLog) {
+    this.logService.downloadCsv(log);
   }
 
   downloadCurrentLog() {
-    this.logService.saveCurrentLog();
+    // This button is no longer for saving, but for downloading the current (incomplete) log
+    const now = new Date();
+    const tempLog: GameLog = {
+      id: now.toISOString(),
+      timestamp: now.toISOString(),
+      settings: this.settings(),
+      log: this.logService.logEntries(),
+      completed: false,
+      homeTeamName: this.settings().homeTeamName,
+      awayTeamName: this.settings().awayTeamName,
+      whiteScore: 0, // Not available in current log
+      blueScore: 0 // Not available in current log
+    };
+    this.logService.downloadCsv(tempLog);
   }
 
   clearIncompleteLogs() {

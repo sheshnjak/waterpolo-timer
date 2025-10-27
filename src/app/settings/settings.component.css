@@ -151,4 +151,8 @@
     background-color: #f44336;
     color: white;
   }
+
+  .recent-logs li span.completed::after {
+    content: ' ✅';
+  }
   

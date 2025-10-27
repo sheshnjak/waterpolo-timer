@@ -23,4 +23,10 @@ export interface GameLog {
   timestamp: string;
   settings: Settings;
   log: LogEntry[];
+  completed: boolean;
+  homeTeamName: string;
+  awayTeamName: string;
+  whiteScore: number;
+  blueScore: number;
+
 }

@@ -45,8 +45,8 @@
           <ul>
             @for (log of pastLogs(); track log.id) {
               <li>
-                <span>{{ formatLog(log) }}</span>
-                <button (click)="downloadLog(log)">Download</button>
+                <span [class.completed]="log.completed">{{ formatLog(log) }}</span>
+                <button (click)="downloadLog(log)">{{ translations.download() }}</button>
               </li>
             }
           </ul>
