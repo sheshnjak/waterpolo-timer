@@ -1,3 +1,4 @@
+
 import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inject, OnInit, inject, ElementRef, ViewChild, WritableSignal } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -127,7 +128,7 @@ export class GameBoardComponent implements OnInit {
         const currentAttackTime = this.attackTime();
         if (currentAttackTime > 0) {
           const newTime = currentAttackTime - 0.1;
-          if (Math.ceil(currentAttackTime) !== Math.ceil(newTime) && Math.ceil(newTime) <= 5 && Math.ceil(newTime) > 0) {
+          if (Math.ceil(currentAttackTime) !== Math.ceil(newTime) && Math.ceil(newTime) <= 5 && Math.ceil(newTime) > 0 && this.quarterTime() > 5) {
             this.soundService.playCountdownBeep(Math.ceil(newTime));
           }
 
