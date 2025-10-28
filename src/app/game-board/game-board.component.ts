@@ -5,6 +5,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { Settings } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService } from '../log.service';
+import { SoundService } from '../sound.service';
 
 const SETTINGS_STORAGE_KEY = 'waterpolo-timer-settings';
 
@@ -28,6 +29,7 @@ interface GameState {
 export class GameBoardComponent implements OnInit {
   languageService = inject(LanguageService);
   logService = inject(LogService);
+  soundService = inject(SoundService);
   @ViewChild('quarterTimeInput') quarterTimeInput: ElementRef | undefined;
 
   translations = {
@@ -42,7 +44,7 @@ export class GameBoardComponent implements OnInit {
   // Game state signals
   quarter = signal<number | string>(1);
   quarterTime = signal(8 * 60);
-  attackTime = signal(30);
+  attackTime = signal(28);
   whiteScore = signal(0);
   blueScore = signal(0);
   whiteExclusions = signal<{ id: number; time: number }[]>([]);
@@ -68,9 +70,9 @@ export class GameBoardComponent implements OnInit {
   // Settings signals
   settings: WritableSignal<Settings> = signal<Settings>({
     quarterDuration: 8,
-    attackDuration: 30,
-    continuedAttackDuration: 20,
-    exclusionDuration: 20,
+    attackDuration: 28,
+    continuedAttackDuration: 18,
+    exclusionDuration: 18,
     homeTeamName: 'WHITE',
     awayTeamName: 'BLUE',
   });
@@ -82,9 +84,6 @@ export class GameBoardComponent implements OnInit {
 
   isAttackTimeLow = computed(() => this.attackTime() <= 5);
   isQuarterTimeLow = computed(() => this.quarterTime() <= 10);
-
-  private quarterEndSound = new Audio('assets/sounds/quarter_end.mp3');
-  private attackEndSound = new Audio('assets/sounds/attack_end.mp3');
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
@@ -128,9 +127,13 @@ export class GameBoardComponent implements OnInit {
         const currentAttackTime = this.attackTime();
         if (currentAttackTime > 0) {
           const newTime = currentAttackTime - 0.1;
+          if (Math.ceil(currentAttackTime) !== Math.ceil(newTime) && Math.ceil(newTime) <= 5 && Math.ceil(newTime) > 0) {
+            this.soundService.playCountdownBeep(Math.ceil(newTime));
+          }
+
           if (newTime <= 0) {
             this.attackTime.set(0);
-            this.attackEndSound.play();
+            this.soundService.playAttackEndSound();
             this.resetAttackTime(this.settings().attackDuration);
           } else {
             this.attackTime.set(newTime);
@@ -139,9 +142,12 @@ export class GameBoardComponent implements OnInit {
 
         if (this.timerTickCount % 10 === 0) {
           if (this.quarterTime() > 0) {
+            if (this.quarterTime() <= 5 && this.quarterTime() > 0) {
+                this.soundService.playCountdownBeep(this.quarterTime());
+            }
             this.quarterTime.update(t => t - 1);
             if (this.quarterTime() === 0) {
-              this.quarterEndSound.play();
+              this.soundService.playQuarterEndSound();
               this.stopTimers();
               if (this.quarter() === 4) {
                 if (this.whiteScore() === this.blueScore()) {
@@ -210,6 +216,11 @@ export class GameBoardComponent implements OnInit {
   resetAttackTime(seconds: number) {
     const newAttackTime = Math.min(seconds, this.quarterTime());
     this.attackTime.set(newAttackTime);
+
+    if (seconds === this.settings().attackDuration) {
+        this.whiteExclusions.set([]);
+        this.blueExclusions.set([]);
+    }
   }
 
   nextQuarter() {
@@ -299,10 +310,7 @@ export class GameBoardComponent implements OnInit {
     this.blueExclusions.set([]);
     this.stopTimers();
     if (isPlatformBrowser(this.platformId)) {
-        this.quarterEndSound.pause();
-        this.quarterEndSound.currentTime = 0;
-        this.attackEndSound.pause();
-        this.attackEndSound.currentTime = 0;
+        this.soundService.stopAllSounds();
     }
     this.timerTickCount = 0;
   }
@@ -317,6 +325,7 @@ export class GameBoardComponent implements OnInit {
       this.blueExclusions.update(e => [...e, newExclusion]);
     }
     this.logService.addEntry('Exclusion', teamName, this.quarter() as number, this.getGameTime(), this.whiteScore(), this.blueScore());
+    this.resetAttackTime(this.settings().continuedAttackDuration);
   }
 
   removeExclusion(team: 'white' | 'blue', id: number) {
@@ -352,6 +361,11 @@ export class GameBoardComponent implements OnInit {
       this.blueScore.set(newBlueScore);
     }
     this.logService.addEntry('Goal', teamName, this.quarter() as number, this.getGameTime(), newWhiteScore, newBlueScore);
+
+    this.stopTimers();
+    this.whiteExclusions.set([]);
+    this.blueExclusions.set([]);
+    this.resetAttackTime(this.settings().attackDuration);
   }
 
   decrementScore(team: 'white' | 'blue') {
@@ -386,9 +400,9 @@ export class GameBoardComponent implements OnInit {
   resetEverything() {
     const defaultSettings: Settings = {
       quarterDuration: 8,
-      attackDuration: 30,
-      continuedAttackDuration: 20,
-      exclusionDuration: 20,
+      attackDuration: 28,
+      continuedAttackDuration: 18,
+      exclusionDuration: 18,
       homeTeamName: 'WHITE',
       awayTeamName: 'BLUE',
     };
