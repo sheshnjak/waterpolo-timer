@@ -8,6 +8,7 @@ const LANGUAGE_STORAGE_KEY = 'waterpolo-timer-language';
 export class LanguageService {
   private translations: any = {
     en: {
+      settings: 'Settings',
       quarterDuration: 'Quarter duration (min)',
       attackDuration: 'Attack duration (sec)',
       exclusionDuration: 'Exclusion duration (sec)',
@@ -41,6 +42,7 @@ export class LanguageService {
       resetAll: 'Reset All',
     },
     hr: {
+      settings: 'Postavke',
       quarterDuration: 'Trajanje četvrtine (min)',
       attackDuration: 'Trajanje napada (sec)',
       exclusionDuration: 'Trajanje isključenja (sec)',

@@ -1,10 +1,10 @@
 <div class="settings-overlay">
   <div class="settings-dialog">
     <div class="top-bar">
-        <h2>{{ languageService.getTranslation('settings')() }}</h2>
+        <h2>{{ translations.settings() }}</h2>
         <div class="buttons">
-            <button class="button-reset" (click)="resetQuarter.emit()">{{ translations.resetQuarter() }}</button>
-            <button class="button-download" (click)="downloadCurrentLog()" [title]="translations.saveCurrentLogTitle()">{{ translations.downloadCurrentLog() }}</button>
+            <button class="button-reset-quarter" (click)="resetQuarter.emit()">{{ translations.resetQuarter() }}</button>
+            <button class="button-download-log" (click)="downloadCurrentLog()" [title]="translations.saveCurrentLogTitle()">{{ translations.downloadCurrentLog() }}</button>
         </div>
     </div>
 

@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit {
   private previousLang: string;
 
   translations = {
+    settings: this.languageService.getTranslation('settings'),
     quarterDuration: this.languageService.getTranslation('quarterDuration'),
     attackDuration: this.languageService.getTranslation('attackDuration'),
     exclusionDuration: this.languageService.getTranslation('exclusionDuration'),

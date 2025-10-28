@@ -132,22 +132,27 @@
     color: white;
   }
 
-  .button-reset {
+  .button-reset-quarter {
     background-color: #f44336;
     color: white;
   }
 
-  .button-download {
+  .button-download-log {
     background-color: #4CAF50;
     color: white;
   }
 
   .button-clear-incomplete {
+    background-color: #ffffff;
+    color: black;
+  }
+
+  .button-clear-all {
     background-color: #ff9800;
     color: white;
   }
 
-  .button-clear-all {
+  .button-reset-all {
     background-color: #f44336;
     color: white;
   }
