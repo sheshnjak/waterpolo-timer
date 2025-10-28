@@ -2,23 +2,24 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
   background: #000;
   color: #fff;
   font-family: 'Roboto Mono', monospace;
   text-align: center;
   user-select: none;
+  padding: 10px;
+  position: relative;
 }
 
 /* Top Controls (Undo, Settings) */
 .top-controls {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
   position: absolute;
-  top: 0;
-  width: calc(100% - 20px);
+  top: 10px;
+  left: 10px;
+  right: 10px;
   z-index: 1;
 }
 
@@ -44,7 +45,8 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  overflow-y: auto; /* Allow main content to scroll if needed */
+  padding-top: 40px; /* Space for top-controls */
 }
 
 /* Timers (Quarter & Attack) */
@@ -182,7 +184,7 @@ main {
 
 /* Footer & Main Controls */
 footer {
-  padding: 10px;
+  padding-top: 10px;
 }
 
 .controls-main {
