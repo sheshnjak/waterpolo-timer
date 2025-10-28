@@ -327,6 +327,7 @@ export class GameBoardComponent implements OnInit {
     }
     this.logService.addEntry('Exclusion', teamName, this.quarter() as number, this.getGameTime(), this.whiteScore(), this.blueScore());
     this.resetAttackTime(this.settings().continuedAttackDuration);
+    this.stopTimers();
   }
 
   removeExclusion(team: 'white' | 'blue', id: number) {

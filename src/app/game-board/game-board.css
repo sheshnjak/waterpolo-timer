@@ -319,4 +319,18 @@ dialog button:hover {
     align-items: center;
     gap: 20px;
   }
+
+  .scoreboard {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 10px;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .button-row {
+    flex-wrap: wrap;
+  }
 }
