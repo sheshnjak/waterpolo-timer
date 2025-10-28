@@ -54,25 +54,57 @@
     </main>
 
     <footer>
-        <div class="controls-main">
+        <!-- WIDE (Landscape) Layout -->
+        <div class="controls-wide">
             <div class="button-row">
-                <div class="quarter-controls">
-                    <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter')() }}</button>
+                <div class="main-controls-group">
+                    <div class="team-controls">
+                        <button class="control-button button-white" (click)="addExclusion('white')">{{ languageService.getTranslation('addExclusion')() }}</button>
+                        <button class="control-button button-white" (click)="decrementScore('white')">-</button>
+                        <button class="control-button button-white" (click)="incrementScore('white')">{{ translations.addGoal() }}</button>
+                    </div>
+                    <div class="team-controls">
+                        <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
+                        <button class="control-button button-blue" (click)="incrementScore('blue')">{{ translations.addGoal() }}</button>
+                        <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>
+                    </div>
+                    <div class="quarter-controls">
+                        <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter')() }}</button>
+                    </div>
                 </div>
+                <button class="control-button button-orange" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
+            </div>
+            <div class="button-row">
+                <div class="start-stop-group">
+                    <button class="control-button start-stop" [class.running]="running()" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
+                </div>
+                <button class="control-button button-yellow" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
+            </div>
+        </div>
+
+        <!-- NARROW (Portrait) Layout -->
+        <div class="controls-narrow">
+             <div class="button-row">
                 <div class="team-controls">
                     <button class="control-button button-white" (click)="addExclusion('white')">{{ languageService.getTranslation('addExclusion')() }}</button>
                     <button class="control-button button-white" (click)="decrementScore('white')">-</button>
                     <button class="control-button button-white" (click)="incrementScore('white')">{{ translations.addGoal() }}</button>
                 </div>
-                <div class="team-controls">
+                 <div class="team-controls">
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                     <button class="control-button button-blue" (click)="incrementScore('blue')">{{ translations.addGoal() }}</button>
-                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>                </div>
-                <button class="control-button button-orange reset-attack-group" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
+                    <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>
+                </div>
+            </div>
+            <div class="button-row">
+                 <div class="quarter-controls">
+                    <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter')() }}</button>
+                    <button class="control-button button-orange" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
+                    <button class="control-button button-yellow" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
+                </div>
             </div>
             <div class="button-row">
                 <button class="control-button start-stop" [class.running]="running()" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
-                <button class="control-button button-yellow" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
             </div>
         </div>
     </footer>

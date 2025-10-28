@@ -15,10 +15,10 @@
 /* Top Controls (Undo, Settings) */
 .top-controls {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 10px;
   position: absolute;
   top: 10px;
-  left: 10px;
   right: 10px;
   z-index: 1;
 }
@@ -46,7 +46,6 @@ main {
   justify-content: center;
   align-items: center;
   overflow-y: auto; /* Allow main content to scroll if needed */
-  padding-top: 40px; /* Space for top-controls */
 }
 
 /* Timers (Quarter & Attack) */
@@ -181,83 +180,127 @@ main {
   color: #fff;
 }
 
+/* --- Footer & Main Controls --- */
 
-/* Footer & Main Controls */
 footer {
-  padding-top: 10px;
-}
-
-.controls-main {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    padding-top: 10px;
+    width: 100%;
 }
 
 .button-row {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .control-button {
-  flex-grow: 1;
-  padding: 15px 5px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #fff;
-  background-color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 50px;
-  font-weight: bold;
+    flex-grow: 1;
+    padding: 15px 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 50px;
+    font-weight: bold;
 }
 
 .control-button:hover {
-  opacity: 0.9;
-}
-
-.quarter-controls,
-.team-controls {
-  flex-grow: 1;
-  display: flex;
-  gap: 10px;
+    opacity: 0.9;
 }
 
 .start-stop {
-  background-color: #4CAF50;
+    background-color: #4CAF50;
 }
 
 .start-stop.running {
-  background-color: #f44336;
+    background-color: #f44336;
 }
 
 .button-white {
-  background-color: #f0f0f0;
-  color: #000;
+    background-color: #f0f0f0;
+    color: #000;
 }
 
 .button-blue {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 .button-orange {
-  background-color: #ff9800;
-}
-
-.button-yellow,
-.reset-attack-group {
-  flex-basis: 25%;
-  flex-grow: 0;
-  flex-shrink: 0;
+    background-color: #ff9800;
 }
 
 .button-yellow {
-  background-color: #ffeb3b;
-  color: #000;
+    background-color: #ffeb3b;
+    color: #000;
 }
+
+
+/* --- Layouts --- */
+
+/* Default (Wide Screen) Layout */
+.controls-narrow {
+    display: none;
+}
+
+.controls-wide {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls-wide .main-controls-group,
+.controls-wide .start-stop-group {
+    flex-grow: 1;
+    display: flex;
+    gap: 10px;
+}
+
+.controls-wide .team-controls,
+.controls-wide .quarter-controls {
+    flex-grow: 1;
+    display: flex;
+    gap: 10px;
+}
+
+.controls-wide .button-orange,
+.controls-wide .button-yellow {
+    flex-basis: 25%;
+    flex-grow: 0;
+}
+
+
+/* Narrow Screen Layout */
+@media (max-width: 768px) {
+    .timers {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 0;
+    }
+
+    .controls-wide {
+        display: none;
+    }
+
+    .controls-narrow {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .controls-narrow .team-controls, 
+    .controls-narrow .quarter-controls {
+        flex-grow: 1;
+        display: flex;
+        gap: 10px;
+    }
+}
+
 
 /* Dialogs */
 .dialog-overlay {
@@ -310,27 +353,4 @@ dialog button {
 
 dialog button:hover {
     opacity: 0.8;
-}
-
-/* Responsive Styles for Portrait Orientation */
-@media (orientation: portrait) {
-  .timers {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .scoreboard {
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 10px;
-  }
-
-  .separator {
-    display: none;
-  }
-
-  .button-row {
-    flex-wrap: wrap;
-  }
 }
