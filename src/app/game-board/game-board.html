@@ -56,7 +56,7 @@
     <footer>
         <div class="controls-main">
             <div class="button-row">
-                <div class="quarter-controls" style="flex-basis: 15%;">
+                <div class="quarter-controls">
                     <button class="control-button" (click)="nextQuarter()">{{ languageService.getTranslation('nextQuarter')() }}</button>
                 </div>
                 <div class="team-controls">
@@ -68,11 +68,11 @@
                     <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                     <button class="control-button button-blue" (click)="incrementScore('blue')">{{ translations.addGoal() }}</button>
                     <button class="control-button button-blue" (click)="addExclusion('blue')">{{ languageService.getTranslation('addExclusion')() }}</button>                </div>
-                <button class="control-button button-orange reset-attack-group" style="flex-basis: 25%;" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
+                <button class="control-button button-orange reset-attack-group" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
             </div>
             <div class="button-row">
-                <button class="control-button start-stop" [class.running]="running()" style="flex-basis: 75%;" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
-                <button class="control-button button-yellow" style="flex-basis: 25%;" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
+                <button class="control-button start-stop" [class.running]="running()" (click)="toggleTimers()">{{ running() ? 'STOP' : 'START' }}</button>
+                <button class="control-button button-yellow" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
             </div>
         </div>
     </footer>

@@ -217,15 +217,11 @@ footer {
   opacity: 0.9;
 }
 
+.quarter-controls,
 .team-controls {
+  flex-grow: 1;
   display: flex;
-  flex-basis: 40%;
   gap: 10px;
-}
-
-.quarter-controls {
-    display: flex;
-    gap: 10px;
 }
 
 .start-stop {
@@ -245,13 +241,20 @@ footer {
   background-color: #2196F3;
 }
 
+.button-orange {
+  background-color: #ff9800;
+}
+
+.button-yellow,
+.reset-attack-group {
+  flex-basis: 25%;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
 .button-yellow {
   background-color: #ffeb3b;
   color: #000;
-}
-
-.button-orange {
-    background-color: #ff9800;
 }
 
 /* Dialogs */
