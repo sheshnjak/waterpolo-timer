@@ -103,10 +103,10 @@ main {
   flex-direction: column;
 }
 
-.team-name,
-.score {
+.team-name {
   font-size: 1.5rem;
   margin-bottom: 10px;
+  font-weight: 700; /* Bolder */
 }
 
 .score {
@@ -194,51 +194,72 @@ footer {
 
 .control-button {
     flex-grow: 1;
-    padding: 15px 5px;
+    padding: 10px 5px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
-    color: #fff;
-    background-color: #333;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 4px;
     text-align: center;
     min-height: 50px;
     font-weight: bold;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.control-button.add-goal-button {
+    flex-grow: 2; /* Takes more space */
 }
 
 .control-button:hover {
-    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.control-button:active {
+    transform: translateY(0);
+}
+
+.control-button .icon {
+    font-size: 1.8em;
 }
 
 .start-stop {
     background-color: #4CAF50;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
 }
 
 .start-stop.running {
     background-color: #f44336;
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
 }
 
 .button-white {
     background-color: #f0f0f0;
     color: #000;
+    box-shadow: 0 0 15px rgba(240, 240, 240, 0.4);
 }
 
 .button-blue {
     background-color: #2196F3;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.5);
 }
 
 .button-orange {
     background-color: #ff9800;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
 }
 
 .button-yellow {
     background-color: #ffeb3b;
     color: #000;
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
 }
-
 
 /* --- Layouts --- */
 
