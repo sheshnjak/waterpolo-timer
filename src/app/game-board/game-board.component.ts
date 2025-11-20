@@ -196,7 +196,7 @@ export class GameBoardComponent implements OnInit {
     };
     this.showUndo.set(true);
     clearTimeout(this.undoTimeout);
-    this.undoTimeout = setTimeout(() => this.showUndo.set(false), 3000);
+    this.undoTimeout = setTimeout(() => this.showUndo.set(false), 5000);
   }
 
   undoLastAction() {
@@ -317,6 +317,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   addExclusion(team: 'white' | 'blue') {
+    this.saveStateForUndo();
     const newExclusion = { id: Date.now(), time: this.settings().exclusionDuration };
     const teamName = team === 'white' ? this.settings().homeTeamName : this.settings().awayTeamName;
 

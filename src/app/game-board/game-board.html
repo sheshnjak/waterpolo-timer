@@ -58,6 +58,9 @@
         <div class="controls-wide">
             <div class="button-row">
                 <div class="main-controls-group">
+                    <div class="quarter-controls">
+                        <button class="control-button" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
+                    </div>
                     <div class="team-controls">
                         <button class="control-button button-white" (click)="addExclusion('white')"><span class="icon material-symbols-outlined">timer_off</span></button>
                         <button class="control-button button-white" (click)="decrementScore('white')">-</button>
@@ -67,9 +70,6 @@
                         <button class="control-button button-blue add-goal-button" (click)="incrementScore('blue')"><span class="icon material-symbols-outlined">sports_volleyball</span></button>
                         <button class="control-button button-blue" (click)="decrementScore('blue')">-</button>
                         <button class="control-button button-blue" (click)="addExclusion('blue')"><span class="icon material-symbols-outlined">timer_off</span></button>
-                    </div>
-                    <div class="quarter-controls">
-                        <button class="control-button" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
                     </div>
                 </div>
                 <button class="control-button button-orange" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
