@@ -244,7 +244,7 @@ footer {
 }
 
 .button-blue {
-    background-color: #2196F3;
+    background-color: #2196f3;
     color: #fff;
     box-shadow: 0 0 20px rgba(33, 150, 243, 0.5);
 }
@@ -322,6 +322,85 @@ footer {
     }
 }
 
+/* Mobile Landscape Layout */
+@media (max-height: 450px) and (orientation: landscape) {
+    .container {
+        padding: 5px;
+    }
+
+    main {
+        justify-content: flex-start;
+    }
+
+    .timers {
+        margin-bottom: 5px;
+        flex-direction: row; 
+        align-items: center;
+    }
+
+    .time {
+        font-size: 4rem;
+    }
+
+    .quarter-inline-display {
+        font-size: 1.2rem;
+    }
+
+    .scoreboard {
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+
+    .score {
+        font-size: 3rem;
+    }
+    
+    .team-name {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .separator {
+        font-size: 3rem;
+    }
+
+    footer {
+        padding-top: 5px;
+    }
+}
+
+/* Ultra-Compact Mobile Landscape Layout */
+@media (max-height: 350px) and (orientation: landscape) {
+    .time {
+        font-size: 3rem;
+    }
+
+    .quarter-inline-display {
+        display: none; 
+    }
+
+    .score {
+        font-size: 2.5rem;
+    }
+
+    .separator {
+        font-size: 2.5rem;
+    }
+
+    .team-name {
+        font-size: 0.9rem;
+    }
+
+    .control-button {
+        min-height: 40px;
+        padding: 5px 2px;
+    }
+
+    .control-button .icon {
+        font-size: 1.5em;
+    }
+}
+
 
 /* Dialogs */
 .dialog-overlay {
@@ -368,7 +447,7 @@ dialog button {
     padding: 10px 15px;
     margin: 5px;
     border-radius: 5px;
-    cursor: pointer;
+  cursor: pointer;
     font-weight: bold;
 }
 
