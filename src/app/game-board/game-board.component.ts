@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inject, OnInit, inject, ElementRef, ViewChild, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, PLATFORM_ID, Inject, OnInit, inject, ElementRef, ViewChild, WritableSignal, HostListener } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from '../settings/settings.component';
@@ -97,6 +97,38 @@ export class GameBoardComponent implements OnInit {
           console.error('Error parsing settings from localStorage', e);
         }
       }
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (this.isEditingQuarterTime()) return;
+
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        this.toggleTimers();
+        break;
+      case 'n':
+      case 'm':
+        this.resetAttackTime(this.settings().attackDuration);
+        break;
+      case 'c':
+      case 'v':
+        this.resetAttackTime(this.settings().continuedAttackDuration);
+        break;
+      case 'q':
+        this.incrementScore('white');
+        break;
+      case 'p':
+        this.incrementScore('blue');
+        break;
+      case 't':
+        this.addExclusion('white');
+        break;
+      case 'u':
+        this.addExclusion('blue');
+        break;
     }
   }
 
