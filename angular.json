@@ -13,6 +13,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/myapp",
+            "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -23,7 +25,8 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
@@ -43,7 +46,8 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -81,7 +85,8 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
