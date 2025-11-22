@@ -1,0 +1,73 @@
+{
+  "configVersion": 1,
+  "timestamp": 1763855557813,
+  "index": "/waterpolo-timer/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/waterpolo-timer/index.html",
+        "/waterpolo-timer/main-VUKVXWLJ.js",
+        "/waterpolo-timer/manifest.webmanifest",
+        "/waterpolo-timer/polyfills-5CFQRCPP.js",
+        "/waterpolo-timer/styles-4AAQQ372.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/waterpolo-timer/assets/icons/icon-192.png",
+        "/waterpolo-timer/assets/icons/icon-512.png",
+        "/waterpolo-timer/assets/icons/icon-72.png",
+        "/waterpolo-timer/assets/icons/icon-96.png",
+        "/waterpolo-timer/assets/images/en-flag.png",
+        "/waterpolo-timer/assets/images/hr-flag.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/waterpolo-timer/assets/icons/icon-192.png": "bd6ef5aa1965c57a70d45d225af4cda1b1c75f51",
+    "/waterpolo-timer/assets/icons/icon-512.png": "ff4895ab57abf1c9de643d6cb19f6a3961dcf52e",
+    "/waterpolo-timer/assets/icons/icon-72.png": "da01f531bf01fe6e0ee7cd5d7fe45096267a9b07",
+    "/waterpolo-timer/assets/icons/icon-96.png": "d06ceff5a81f4b425569aa25c9d6f1614f6745d8",
+    "/waterpolo-timer/assets/images/en-flag.png": "aecb0558a57b33cf50b3812930daf60760fb80eb",
+    "/waterpolo-timer/assets/images/hr-flag.png": "f131f85ca16852e5075268892d2789aab0e2de4c",
+    "/waterpolo-timer/index.html": "e831b050e5a553b308d8fe661cf1ef527c43fd8f",
+    "/waterpolo-timer/main-VUKVXWLJ.js": "b0466910d3d626a7446d78d5a0aba5f15e326fdc",
+    "/waterpolo-timer/manifest.webmanifest": "37cedb842b7bcb5903c268fdaf66a4c9be240aa7",
+    "/waterpolo-timer/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "/waterpolo-timer/styles-4AAQQ372.css": "51b12bad22cb596951afad3f1457032fe9c2bf92"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
