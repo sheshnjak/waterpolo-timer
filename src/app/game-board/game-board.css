@@ -210,10 +210,6 @@ footer {
     transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-.control-button.add-goal-button {
-    flex-grow: 2; /* Takes more space */
-}
-
 .control-button:hover {
     transform: translateY(-2px);
 }
@@ -224,6 +220,11 @@ footer {
 
 .control-button .icon {
     font-size: 1.8em;
+}
+
+.control-button img.icon {
+    height: 1.8em;
+    width: 1.8em;
 }
 
 .start-stop {
@@ -399,6 +400,11 @@ footer {
     .control-button .icon {
         font-size: 1.5em;
     }
+
+    .control-button img.icon {
+        height: 1.5em;
+        width: 1.5em;
+    }
 }
 
 /* High-Resolution Desktop Layout */
@@ -425,6 +431,11 @@ footer {
 
   .control-button .icon {
     font-size: 2.5em;
+  }
+
+  .control-button img.icon {
+    height: 2.5em;
+    width: 2.5em;
   }
 }
 
