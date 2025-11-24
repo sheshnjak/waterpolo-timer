@@ -402,7 +402,7 @@ footer {
 }
 
 /* High-Resolution Desktop Layout */
-@media (min-width: 1921px) {
+@media (min-width: 1880px) {
   .time {
     font-size: 15rem;
   }
