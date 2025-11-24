@@ -401,6 +401,33 @@ footer {
     }
 }
 
+/* High-Resolution Desktop Layout */
+@media (min-width: 1921px) {
+  .time {
+    font-size: 15rem;
+  }
+
+  .score {
+    font-size: 9rem;
+  }
+
+  .separator {
+    font-size: 8rem;
+  }
+
+  .team-name {
+    font-size: 3rem;
+  }
+
+  .quarter-inline-display {
+    font-size: 3rem;
+  }
+
+  .control-button .icon {
+    font-size: 2.5em;
+  }
+}
+
 
 /* Dialogs */
 .dialog-overlay {
