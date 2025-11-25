@@ -59,7 +59,7 @@
             <div class="button-row">
                 <div class="main-controls-group">
                     <div class="quarter-controls">
-                        <button class="control-button" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
+                        <button class="control-button button-orange" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
                     </div>
                     <div class="team-controls">
                         <button class="control-button button-white" (click)="addExclusion('white')"><span class="icon material-symbols-outlined">timer_off</span></button>
@@ -104,7 +104,7 @@
             </div>
             <div class="button-row">
                  <div class="quarter-controls">
-                    <button class="control-button" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
+                    <button class="control-button button-orange" (click)="nextQuarter()"><span class="icon material-symbols-outlined">skip_next</span></button>
                     <button class="control-button button-yellow" (click)="resetAttackTime(settings().attackDuration)" [title]="languageService.getTranslation('newAttack')()">&#8634; {{ settings().attackDuration }} s</button>
                     <button class="control-button button-orange" (click)="resetAttackTime(settings().continuedAttackDuration)">&#8634; {{ settings().continuedAttackDuration }} s</button>
                 </div>

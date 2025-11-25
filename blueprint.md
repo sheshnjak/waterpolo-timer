@@ -1,30 +1,37 @@
 
-# Water Polo Timer
+# Water Polo Timer Blueprint
 
-This application is a feature-rich water polo timer designed for both official games and practice sessions. It provides a comprehensive set of tools to manage game time, attack clocks, exclusions, and logging, ensuring a smooth and accurately recorded game.
+## Overview
+
+This application is a specialized, feature-rich timer and scoreboard designed for water polo referees, coaches, and players. It provides a comprehensive and intuitive interface for managing all critical aspects of a water polo match, ensuring accuracy and ease of use during fast-paced games. The app is built with the latest version of Angular, leveraging modern features like standalone components, signals, and native control flow for optimal performance and maintainability.
 
 ## Features
 
-- **Game Clock:** A primary timer for the entire game, configurable for different quarter lengths.
-- **Attack Clock:** A secondary timer for the 30-second attack rule.
-- **Exclusion Timer:** Manages 20-second player exclusions.
-- **Scoring:** Buttons to add goals for both the home and away teams.
-- **Team Names:** Editable names for both competing teams.
-- **Sound Notifications:** Audio cues for the end of a quarter and the end of an attack.
-- **Multilingual Support:** The interface is available in English and Croatian.
-- **Automatic Team Name Translation:** Default team names (White/Blue and Bijeli/Plavi) are automatically translated when the language is changed. Custom team names are not affected.
-- **Game Log:** A detailed log of all game events, which can be downloaded as a CSV file.
-- **Settings Panel:** A comprehensive settings panel to customize game parameters.
-- **Recent Logs:** A list of recent game logs, with the ability to download each one.
-- **Persistent State:** All settings and game state are saved to local storage, so you can pick up where you left off.
-- **Responsive Design:** The application is designed to work on a variety of screen sizes.
+- **Main Game Clock**: A large, clear display for the quarter time, which can be easily started, stopped, and edited.
+- **Attack Clock**: A dedicated 30-second attack clock that automatically resets and can also be manually reset to the full duration or a continued (20-second) duration.
+- **Scoreboard**: Simple, clickable scores for both the home (White) and away (Blue) teams.
+- **Exclusion Timers**: Functionality to add and manage 20-second exclusion periods for each team.
+- **Quarter Management**: A "Next Quarter" button to advance the game state, with logic for handling regulation and overtime periods.
+- **Game State Management**: The app accurately tracks game state, including running/paused, quarter number, and game over conditions.
+- **Settings Panel**: A comprehensive settings dialog to customize:
+    - Quarter duration
+    - Attack duration
+    - Continued attack duration
+    - Exclusion duration
+    - Team names
+- **Game Log**: The application automatically logs every significant event (goals, exclusions, time adjustments) and provides the ability to download the game log as a text file.
+- **Undo Functionality**: A crucial feature that allows the referee to undo the last action, preventing critical errors.
+- **Multi-language Support**: The UI is fully translated into English and Croatian, with a simple language selector.
+- **Responsive Design**: The interface is optimized for both wide (desktop/tablet landscape) and narrow (mobile portrait) screens, ensuring a seamless experience on any device.
 
-## Current Plan
+## Design and Styling
 
-I will continue to add more features and improvements to the application. The following is a list of changes that I have just implemented:
+The application follows a clean, dark-mode aesthetic designed for high visibility in various lighting conditions. The styling is managed at a component level, ensuring that styles are encapsulated and easy to maintain.
 
-- **Implemented Automatic Team Name Translation:** Added logic to the `settings.component.ts` that automatically translates the team names between English and Croatian when the language is changed, but only if the team names are the default values (White/Blue or Bijeli/Plavi). If the team names have been customized, they will not be translated.
-- Added `goalScoredBy` and `noRecentLogs` translations to the `language.service.ts` to support internationalization for the goal log message and the "no recent logs" message in the settings panel.
-- Updated the `game-board.component.ts` to use the new `goalScoredBy` translation when logging a goal.
-- Updated the `settings.component.ts` to use the new `noRecentLogs` translation.
-- Fixed a series of build errors in `settings.component.ts` related to incorrectly accessing an `@Input()` property in the constructor, an incorrect import of a `Team` model that didn't exist, type mismatches between the component's understanding of the `GameLog` object and the actual implementation in `log.service.ts` and `models.ts`, and incorrect method calls to the `log.service.ts`.
+- **Color Palette**:
+    - **Primary Action (Start/Stop)**: Green (`#4CAF50`) for "Start" and Red (`#f44336`) for "Stop."
+    - **Attack Resets**: A bright, distinct yellow (`#fcf800`) for a new attack and orange (`#ff9800`) for a continued attack.
+    - **Team Colors**: White (`#fff`) for the home team and Blue (`#2196f3`) for the away team.
+- **Typography**: `Roboto Mono` is used for timers and scores to provide a clear, fixed-width digital clock feel. A standard sans-serif font is used for other UI elements.
+- **Component-Specific Styles**: Instead of a global stylesheet, each component has its own `.css` file. This approach keeps styling concerns localized and avoids unintended side effects. For example, button styles are defined within the component that uses them (e.g., `game-board.component.css`, `settings.component.css`), using semantic class names like `.button-save` or `.button-white` that describe their function or appearance within that specific context.
+- **Layout**: The layout is built with Flexbox to ensure flexibility and responsiveness across different screen sizes and orientations.
