@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1763993672003,
+  "timestamp": 1764079955046,
   "index": "/waterpolo-timer/index.html",
   "assetGroups": [
     {
@@ -12,10 +12,10 @@
       },
       "urls": [
         "/waterpolo-timer/index.html",
-        "/waterpolo-timer/main-PMUXNG2P.js",
+        "/waterpolo-timer/main-4SAGSMWE.js",
         "/waterpolo-timer/manifest.webmanifest",
         "/waterpolo-timer/polyfills-5CFQRCPP.js",
-        "/waterpolo-timer/styles-4AAQQ372.css"
+        "/waterpolo-timer/styles-A44RVMTM.css"
       ],
       "patterns": []
     },
@@ -31,6 +31,7 @@
         "/waterpolo-timer/assets/icons/icon-512.png",
         "/waterpolo-timer/assets/icons/icon-72.png",
         "/waterpolo-timer/assets/icons/icon-96.png",
+        "/waterpolo-timer/assets/icons/lopta.svg",
         "/waterpolo-timer/assets/images/en-flag.png",
         "/waterpolo-timer/assets/images/hr-flag.png"
       ],
@@ -43,13 +44,14 @@
     "/waterpolo-timer/assets/icons/icon-512.png": "ff4895ab57abf1c9de643d6cb19f6a3961dcf52e",
     "/waterpolo-timer/assets/icons/icon-72.png": "da01f531bf01fe6e0ee7cd5d7fe45096267a9b07",
     "/waterpolo-timer/assets/icons/icon-96.png": "d06ceff5a81f4b425569aa25c9d6f1614f6745d8",
+    "/waterpolo-timer/assets/icons/lopta.svg": "1ac80815a264e4076596e13ae450edcf482c03ff",
     "/waterpolo-timer/assets/images/en-flag.png": "aecb0558a57b33cf50b3812930daf60760fb80eb",
     "/waterpolo-timer/assets/images/hr-flag.png": "f131f85ca16852e5075268892d2789aab0e2de4c",
-    "/waterpolo-timer/index.html": "1d6f92d7eeab4e806249c440a1b67811321ed50e",
-    "/waterpolo-timer/main-PMUXNG2P.js": "a0ac00ea8481641d7c2548ad88971c394da0bfcd",
+    "/waterpolo-timer/index.html": "f69d61dfc8448ce1a8c7371a2d8ca3f75c66b18a",
+    "/waterpolo-timer/main-4SAGSMWE.js": "d83bdb11ed1dd7a7910526cd3d0adb4d3e092607",
     "/waterpolo-timer/manifest.webmanifest": "37cedb842b7bcb5903c268fdaf66a4c9be240aa7",
     "/waterpolo-timer/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/waterpolo-timer/styles-4AAQQ372.css": "51b12bad22cb596951afad3f1457032fe9c2bf92"
+    "/waterpolo-timer/styles-A44RVMTM.css": "05121b8e67ba95564204cbd917037e65e6672660"
   },
   "navigationUrls": [
     {
