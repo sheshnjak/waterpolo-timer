@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --base-href='/waterpolo-timer/' --output-path=dist/myapp && ngh --dir=dist/myapp/browser --repo=https://github.com/sheshnjak/waterpolo-timer.git --no-silent"
+    "deploy": "ng build --base-href=/waterpolo-timer/ && gh-pages -d dist/myapp/browser"
   },
   "prettier": {
     "printWidth": 100,
@@ -35,18 +35,18 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.1.0",
+    "@angular-devkit/build-angular": "^20.3.5",
     "@angular/build": "^20.3.5",
     "@angular/cli": "^20.3.5",
     "@angular/compiler-cli": "^20.3.0",
     "@types/jasmine": "~5.1.0",
-    "angular-cli-ghpages": "^2.0.1",
+    "gh-pages": "^6.3.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.0"
+    "typescript": "^5.9.2"
   }
 }
