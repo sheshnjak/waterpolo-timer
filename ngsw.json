@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1764443824259,
+  "timestamp": 1764453554573,
   "index": "/waterpolo-timer/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "/waterpolo-timer/index.html",
-        "/waterpolo-timer/main-4GLESL4N.js",
+        "/waterpolo-timer/main-2OT5RJ2Z.js",
         "/waterpolo-timer/manifest.webmanifest",
         "/waterpolo-timer/polyfills-5CFQRCPP.js",
         "/waterpolo-timer/styles-6OEBQRPV.css"
@@ -47,8 +47,8 @@
     "/waterpolo-timer/assets/icons/lopta.svg": "1ac80815a264e4076596e13ae450edcf482c03ff",
     "/waterpolo-timer/assets/images/en-flag.png": "aecb0558a57b33cf50b3812930daf60760fb80eb",
     "/waterpolo-timer/assets/images/hr-flag.png": "f131f85ca16852e5075268892d2789aab0e2de4c",
-    "/waterpolo-timer/index.html": "03a9223751820bd4b7fe68a7b076b414115219cb",
-    "/waterpolo-timer/main-4GLESL4N.js": "d384c3f58ff134852bcab1561013654ff3020db1",
+    "/waterpolo-timer/index.html": "b81cca47ef49d58ea618b588a26da5bf9598a1a8",
+    "/waterpolo-timer/main-2OT5RJ2Z.js": "6319011d5f8f56a13166041f91975cd1f3f68efc",
     "/waterpolo-timer/manifest.webmanifest": "37cedb842b7bcb5903c268fdaf66a4c9be240aa7",
     "/waterpolo-timer/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/waterpolo-timer/styles-6OEBQRPV.css": "6437af8d5606615efc5e662c51bbc12f3d729204"
