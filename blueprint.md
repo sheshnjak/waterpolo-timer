@@ -35,3 +35,10 @@ The application follows a clean, dark-mode aesthetic designed for high visibilit
 - **Typography**: `Roboto Mono` is used for timers and scores to provide a clear, fixed-width digital clock feel. A standard sans-serif font is used for other UI elements.
 - **Component-Specific Styles**: Instead of a global stylesheet, each component has its own `.css` file. This approach keeps styling concerns localized and avoids unintended side effects. For example, button styles are defined within the component that uses them (e.g., `game-board.component.css`, `settings.component.css`), using semantic class names like `.button-save` or `.button-white` that describe their function or appearance within that specific context.
 - **Layout**: The layout is built with Flexbox to ensure flexibility and responsiveness across different screen sizes and orientations.
+
+## Deployment Strategy
+
+- **Deployment Target**: The project **MUST** be deployed to **GitHub Pages**.
+- **Deployment Branch**: The application is built and deployed to the `gh-pages` branch.
+- **Deployment Tool**: The `gh-pages` npm package is the designated and sole tool for all deployments. The `deploy` script in `package.json` is configured for this purpose.
+- **Forbidden Platform**: **Firebase is NOT to be used for deployment under any circumstances.** All deployment efforts must be directed to GitHub Pages as specified.

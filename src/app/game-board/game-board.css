@@ -228,8 +228,8 @@ footer {
 }
 
 .control-button img.icon {
-    height: 0.97em;
-    width: 0.97em;
+    height: 1.12em;
+    width: 1.12em;
 }
 
 .start-stop {
@@ -460,8 +460,8 @@ dialog button:hover {
     }
 
     .control-button img.icon {
-        height: 0.97em;
-        width: 0.97em;
+        height: 1.12em;
+        width: 1.12em;
     }
 }
 
@@ -492,7 +492,7 @@ dialog button:hover {
   }
 
   .control-button img.icon {
-    height: 1.58em;
-    width: 1.58em;
+    height: 1.82em;
+    width: 1.82em;
   }
 }
