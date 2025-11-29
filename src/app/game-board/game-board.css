@@ -363,6 +363,26 @@ dialog button:hover {
         margin-bottom: 0;
     }
 
+    .time {
+        line-height: 1;
+    }
+
+    .score {
+        line-height: 1;
+    }
+
+    .scoreboard {
+        margin-bottom: 10px;
+    }
+
+    .team-name {
+        margin-bottom: 0;
+    }
+
+    .quarter-inline-display {
+        margin-bottom: 0;
+    }
+
     .controls-wide {
         display: none;
     }
