@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, EventEmitter, inject, input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GameLog, LogEntry, Settings } from '../models';
 import { LanguageService } from '../language.service';
@@ -29,7 +29,7 @@ export class SettingsComponent implements OnInit {
   pastLogs = this.logService.pastLogs;
   private previousLang: string;
 
-  translations = {
+  translations = computed(() => ({
     settings: this.languageService.getTranslation('settings'),
     quarterDuration: this.languageService.getTranslation('quarterDuration'),
     attackDuration: this.languageService.getTranslation('attackDuration'),
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
     downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
     resetAll: this.languageService.getTranslation('resetAll'),
     help: this.languageService.getTranslation('help')
-  };
+  }));
 
   constructor() {
     this.previousLang = this.languageService.currentLanguage();

@@ -22,18 +22,16 @@ import { LanguageService } from '../language.service';
   styles: [`
     .dialog-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+      z-index: 1001;
     }
 
     dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: #222;
       color: white;
       border: 1px solid #444;
@@ -42,6 +40,7 @@ import { LanguageService } from '../language.service';
       width: 300px;
       text-align: left;
       font-family: sans-serif;
+      z-index: 1002;
     }
 
     dialog h2 {
@@ -75,6 +74,19 @@ import { LanguageService } from '../language.service';
     dialog button:hover {
         opacity: 0.8;
     }
+
+    @media (max-width: 600px) {
+      dialog {
+        width: 90%;
+        padding: 15px;
+      }
+      dialog h2 {
+        font-size: 1.3rem;
+      }
+      dialog li {
+        margin-bottom: 8px;
+      }
+    }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -96,5 +108,4 @@ export class HelpComponent {
     settingsText: this.languageService.getTranslation('settingsText'),
     close: this.languageService.getTranslation('close'),
   }));
-
 }

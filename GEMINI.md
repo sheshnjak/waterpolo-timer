@@ -211,6 +211,7 @@ The AI's workflow is iterative, transparent, and responsive to user input.
      * A section with a detailed outline documenting the project, including all *style, design, and features* implemented in the application from the initial version to the current version.
      * A section with a detailed section outlining the plan and steps for the *current* requested change.
   2. Before initiating any new change or at the start of a new chat session, the AI will reference the blueprint.md to ensure full context and understanding of the application's current state and existing features. This ensures consistency and avoids redundant or conflicting modifications.
+* **Deployment and Commit Protocol**: Before any deployment or commit, the AI **MUST** check the `blueprint.md` file for project-specific instructions and adhere to them strictly.
 * **Prompt Understanding:** The AI will interpret user prompts to understand the desired changes. It will ask clarifying questions if the prompt is ambiguous.
 * **Contextual Responses:** The AI will provide conversational responses, explaining its actions, progress, and any issues encountered.
 * **Error Checking Flow:**
