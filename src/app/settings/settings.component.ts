@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { GameLog, LogEntry, Settings } from '../models';
 import { LanguageService } from '../language.service';
 import { LogService } from '../log.service';
+import { HelpComponent } from '../help/help.component';
 
 @Component({
   selector: 'app-settings',
-  imports: [FormsModule],
+  imports: [FormsModule, HelpComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +22,7 @@ export class SettingsComponent implements OnInit {
   @Output() resetQuarter = new EventEmitter<void>();
   @Output() resetAll = new EventEmitter<void>();
 
-
+  showHelp = signal(false);
   editedSettings!: WritableSignal<Settings>;
   homeTeamName!: string;
   awayTeamName!: string;
@@ -44,7 +45,8 @@ export class SettingsComponent implements OnInit {
     saveCurrentLogTitle: this.languageService.getTranslation('saveCurrentLogTitle'),
     noRecentLogs: this.languageService.getTranslation('noRecentLogs'),
     downloadCurrentLog: this.languageService.getTranslation('downloadCurrentLog'),
-    resetAll: this.languageService.getTranslation('resetAll')
+    resetAll: this.languageService.getTranslation('resetAll'),
+    help: this.languageService.getTranslation('help')
   };
 
   constructor() {
@@ -121,7 +123,7 @@ export class SettingsComponent implements OnInit {
   }
 
   downloadCurrentLog() {
-    // This button is no longer for saving, but for downloading the current (incomplete) log
+    // This button is no longer for saving, but for downloading the.ts (incomplete) log
     const now = new Date();
     const tempLog: GameLog = {
       id: now.toISOString(),

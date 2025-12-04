@@ -5,6 +5,9 @@
         <div class="buttons">
             <button class="button-reset-quarter" (click)="resetQuarter.emit()">{{ translations.resetQuarter() }}</button>
             <button class="button-download-log" (click)="downloadCurrentLog()" [title]="translations.saveCurrentLogTitle()">{{ translations.downloadCurrentLog() }}</button>
+            <button class="help-button" (click)="showHelp.set(true)">
+              <span class="material-symbols-outlined">help_outline</span> {{ translations.help() }}
+            </button>
         </div>
     </div>
 
@@ -34,7 +37,7 @@
         <label>{{ translations.homeTeamNameLabel() }}</label>
         <input type="text" [(ngModel)]="homeTeamName">
       </div>
-      <div class="form-group">
+      <div classs="form-group">
         <label>{{ translations.awayTeamNameLabel() }}</label>
         <input type="text" [(ngModel)]="awayTeamName">
       </div>
@@ -68,3 +71,7 @@
     </div>
   </div>
 </div>
+
+@if (showHelp()) {
+  <app-help (close)="showHelp.set(false)"></app-help>
+}
